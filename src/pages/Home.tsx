@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../lib/store';
 import { getPublicUrl } from '../lib/storage';
-import './home.css';
+
 
 const PLACEHOLDER_BANNERS = [
   'https://files.catbox.moe/ljdc20.jpg',
