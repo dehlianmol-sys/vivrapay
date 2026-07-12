@@ -46,7 +46,7 @@ export default function Register() {
   return (
     <div className="flex justify-center bg-white min-h-screen">
       <div className="w-full max-w-[400px] px-6 py-10 bg-white">
-        <div className="text-center mt-5 mb-12">
+        <div className="text-center mt-24 mb-10">
           <img
             src="https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Vivrapaylogo.png"
             alt="Tivra Pay Logo"

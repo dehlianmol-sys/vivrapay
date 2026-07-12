@@ -171,3 +171,87 @@ body {
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ===== Home Dashboard (hp-*) — matches home.html reference ===== */
+.hp-app { width: 100%; background-color: #fafbfc; min-height: 100vh; position: relative; }
+.hp-slider-container { width: 100%; padding: 10px; }
+.hp-slide { width: 100%; border-radius: 12px; overflow: hidden; }
+.hp-slide img { width: 100%; height: 180px; object-fit: cover; display: block; border-radius: 12px; }
+.hp-fade { animation: fadeIn 1.5s; }
+
+.hp-card {
+  background-color: #fff;
+  margin: 10px;
+  border-radius: 12px;
+  padding: 20px 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  background-image: linear-gradient(rgba(255, 249, 230, 0.92), rgba(255, 252, 240, 0.95)), url('https://files.catbox.moe/ljdc20.jpg');
+  background-size: cover;
+  background-position: center;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hp-card-header { display: flex; align-items: center; font-size: 16px; font-weight: 600; color: #333; margin-bottom: 15px; }
+.hp-card-subtitle { font-size: 11px; color: #888; margin-left: 10px; font-weight: normal; }
+
+.hp-balance-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.hp-balance-amount { display: flex; align-items: center; font-size: 28px; font-weight: bold; color: #333; gap: 10px; }
+.hp-balance-amount .flag { font-size: 24px; }
+
+.hp-buy-btn {
+  background-color: #2b7deb;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hp-buy-btn .rupee-badge {
+  background: white;
+  color: #2b7deb;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hp-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px; align-items: center; }
+.hp-stat-item { display: flex; flex-direction: column; gap: 5px; }
+.hp-stat-label { font-size: 12px; color: #666; }
+.hp-stat-value { font-size: 13px; color: #333; }
+.hp-action-btn { background: transparent; border: 1px solid #ddd; padding: 8px; border-radius: 6px; font-size: 12px; color: #555; text-align: center; cursor: pointer; }
+.hp-divider { height: 1px; background-color: #f0f0f0; margin: 10px 0; }
+
+.hp-alert-bar {
+  background: #fff;
+  margin: 10px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+  color: #888;
+  font-size: 13px;
+}
+.hp-alert-content { display: flex; align-items: center; gap: 10px; }
+
+.hp-news-section { background: #fff; margin: 10px; border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+.hp-news-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.hp-news-header h3 { font-size: 16px; font-weight: normal; }
+.hp-news-header a { font-size: 12px; color: #888; text-decoration: none; }
+.hp-news-item { margin-bottom: 15px; }
+.hp-news-item:last-child { margin-bottom: 0; }
+.hp-news-title { font-size: 14px; color: #333; margin-bottom: 5px; }
+.hp-news-date { font-size: 11px; color: #999; }
