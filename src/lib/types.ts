@@ -68,6 +68,8 @@ export interface AppSettings {
   rewardPercentage: number;
   minOrderSize: number;
   maxOrderSize: number;
+  newbieRequiredOrderAmount: number;
+  newbieRewardAmount: number;
 }
 
 export interface CustomerService {

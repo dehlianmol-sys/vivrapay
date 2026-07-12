@@ -50,6 +50,8 @@ interface AppSettingsRow {
   reward_percentage: number;
   min_order_size: number;
   max_order_size: number;
+  newbie_required_order_amount: number;
+  newbie_reward_amount: number;
 }
 
 interface CustomerServiceRow {
@@ -105,7 +107,7 @@ interface StoreValue {
   activeBanners: Banner[];
   activeGateways: PaymentGateway[];
   appSettings: AppSettings | null;
-  updateAppSettings: (patch: Partial<Pick<AppSettings, 'rewardPercentage' | 'minOrderSize' | 'maxOrderSize'>>) => Promise<void>;
+  updateAppSettings: (patch: Partial<Pick<AppSettings, 'rewardPercentage' | 'minOrderSize' | 'maxOrderSize' | 'newbieRequiredOrderAmount' | 'newbieRewardAmount'>>) => Promise<void>;
   customerServices: CustomerService[];
   addCustomerService: (cs: Omit<CustomerService, 'id' | 'createdAt'>) => Promise<void>;
   deleteCustomerService: (id: string) => Promise<void>;
@@ -164,6 +166,8 @@ function mapAppSettings(r: AppSettingsRow): AppSettings {
     rewardPercentage: Number(r.reward_percentage),
     minOrderSize: Number(r.min_order_size),
     maxOrderSize: Number(r.max_order_size),
+    newbieRequiredOrderAmount: Number(r.newbie_required_order_amount ?? 300),
+    newbieRewardAmount: Number(r.newbie_reward_amount ?? 60),
   };
 }
 
@@ -425,15 +429,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     await supabase.from('transaction_records').update({ status: 'Success' }).eq('id', depositId);
     const target = users.find((u) => u.id === dep.userId);
     if (target) {
+      const newbieMin = appSettings?.newbieRequiredOrderAmount ?? 300;
+      const newbieReward = appSettings?.newbieRewardAmount ?? 60;
+      const qualifiesForNewbie = !target.has_deposited_300 && dep.amount >= newbieMin;
+      const bonus = qualifiesForNewbie ? newbieReward : 0;
       const patch: Record<string, unknown> = {
-        wallet: +(target.wallet + dep.itoken).toFixed(2),
+        wallet: +(target.wallet + dep.itoken + bonus).toFixed(2),
       };
-      if (dep.amount >= 300) patch.has_deposited_300 = true;
+      if (qualifiesForNewbie) patch.has_deposited_300 = true;
       if (target.lockedDepositId === depositId) patch.locked_deposit_id = null;
       await supabase.from('profiles').update(patch).eq('id', target.id);
     }
     await refreshAll();
-  }, [deposits, users, refreshAll]);
+  }, [deposits, users, appSettings, refreshAll]);
 
   const rejectDeposit: StoreValue['rejectDeposit'] = useCallback(async (depositId) => {
     const dep = deposits.find((d) => d.id === depositId);
@@ -461,6 +469,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (patch.rewardPercentage !== undefined) dbPatch.reward_percentage = patch.rewardPercentage;
     if (patch.minOrderSize !== undefined) dbPatch.min_order_size = patch.minOrderSize;
     if (patch.maxOrderSize !== undefined) dbPatch.max_order_size = patch.maxOrderSize;
+    if (patch.newbieRequiredOrderAmount !== undefined) dbPatch.newbie_required_order_amount = patch.newbieRequiredOrderAmount;
+    if (patch.newbieRewardAmount !== undefined) dbPatch.newbie_reward_amount = patch.newbieRewardAmount;
     const { error } = await supabase.from('app_settings').update(dbPatch).eq('id', appSettings.id);
     if (error) throw error;
     await refreshAll();
