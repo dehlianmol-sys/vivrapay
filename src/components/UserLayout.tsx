@@ -14,19 +14,19 @@ export default function UserLayout() {
   const navigate = useNavigate();
   return (
     <div className="relative w-full max-w-[480px] mx-auto bg-[#fafbfc] min-h-screen shadow-sm">
-      <div className="min-h-screen pb-[140px]">
+      <div className="min-h-screen pb-[180px]">
         <Outlet />
       </div>
       <button
         type="button"
         onClick={() => navigate('/customer-service')}
-        className="fixed bottom-[150px] right-4 w-[50px] h-[50px] bg-[#e6eefc] rounded-full flex justify-center items-center shadow-lg z-[100] sm:right-[max(1rem,calc(50%-240px+1rem))]"
+        className="fixed bottom-[190px] right-4 w-[50px] h-[50px] bg-[#e6eefc] rounded-full flex justify-center items-center shadow-lg z-[100] sm:right-[max(1rem,calc(50%-240px+1rem))]"
         aria-label="Customer Support"
       >
         <Headset size={24} className="text-[#5c4ce4]" />
         <span className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-[#5c4ce4] rounded-full" />
       </button>
-      <nav className="fixed bottom-[70px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white flex justify-between px-5 py-2.5 border-t border-gray-200 z-[100]">
+      <nav className="fixed bottom-[100px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white flex justify-between px-5 py-2.5 border-t border-gray-200 z-[100]">
         {navItems.map((item) => {
           const active = pathname === item.to;
           const Icon = item.icon;
@@ -44,7 +44,7 @@ export default function UserLayout() {
           );
         })}
       </nav>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-[70px] bg-[#fafbfc] z-[99]" />
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-[100px] bg-[#fafbfc] z-[99]" />
     </div>
   );
 }
