@@ -138,7 +138,7 @@ export default function Payment() {
         <span className="font-mono">{fmt(remaining)}</span> Please pay in time
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-[180px] text-center">
+      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-[240px] text-center">
         <div className="text-rose-600 text-[13px] font-medium">
           Please use the selected UPI to pay
         </div>
