@@ -340,20 +340,22 @@ function HistoryPage({
 }
 
 function NewbiePage({ onBack }: { onBack: () => void }) {
-  const { currentUser } = useStore();
+  const { currentUser, appSettings } = useStore();
 
   const hasLinkedUpi = (currentUser?.upis ?? []).length > 0;
-  const hasPurchased300 = currentUser?.has_deposited_300 ?? false;
+  const newbieMin = appSettings?.newbieRequiredOrderAmount ?? 300;
+  const newbieReward = appSettings?.newbieRewardAmount ?? 60;
+  const hasPurchasedRequired = currentUser?.has_deposited_300 ?? false;
 
   const tasks = [
     { label: 'Subscribe to Official Channel', done: true, icon: 'channel' },
     { label: 'Join VIP Group', done: true, icon: 'channel' },
     { label: 'Watch Beginner Tutorial', done: true, icon: 'video' },
     { label: 'Link Mobikwik', done: hasLinkedUpi, icon: 'mobikwik' },
-    { label: 'Purchase 300 Tokens', done: hasPurchased300, icon: 'coin' },
+    { label: `Purchase ${newbieMin} Tokens`, done: hasPurchasedRequired, icon: 'coin' },
   ];
 
-  const rewardUnlocked = hasPurchased300;
+  const rewardUnlocked = hasPurchasedRequired;
 
   return (
     <div className="flex flex-col h-full bg-white">
@@ -372,7 +374,7 @@ function NewbiePage({ onBack }: { onBack: () => void }) {
                 <circle cx="12" cy="12" r="11" fill="#facc15" />
                 <text x="12" y="16" fontSize="12" textAnchor="middle" fill="#fff" fontWeight="bold">₹</text>
               </svg>
-              150
+              {newbieReward}
             </div>
           </div>
           <button
