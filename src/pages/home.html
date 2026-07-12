@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tivrapay Replica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f9;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mobile App Container */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: #fafbfc;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px; /* Space for bottom nav */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Top Carousel Slider */
+        .slider-container {
+            width: 100%;
+            position: relative;
+            padding: 10px;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .slide img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+        /* Fading animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* Card Section */
+.card {
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 12px;
+    padding: 20px 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    
+    /* Yahan white ki jagah thoda sa light yellow overlay add kiya gaya hai */
+    background-image: linear-gradient(rgba(255, 249, 230, 0.92), rgba(255, 252, 240, 0.95)), url('https://files.catbox.moe/ljdc20.jpg');
+    background-size: cover;
+    background-position: center;
+
+    /* Box ko 4:3 ratio mein lamba karne ke liye */
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .card-subtitle {
+            font-size: 11px;
+            color: #888;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+
+        .balance-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .balance-amount {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .balance-amount img {
+            width: 24px;
+            margin-right: 10px;
+        }
+        
+        .buy-btn {
+            background-color: #2b7deb;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        .stat-value {
+            font-size: 13px;
+            color: #333;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 10px 0;
+        }
+
+        /* Alert Bar */
+        .alert-bar {
+            background: #fff;
+            margin: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            color: #888;
+            font-size: 13px;
+        }
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* News Section */
+        .news-section {
+            background: #fff;
+            margin: 10px;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .news-header h3 {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .news-header a {
+            font-size: 12px;
+            color: #888;
+            text-decoration: none;
+        }
+
+        .news-item {
+            margin-bottom: 15px;
+        }
+        .news-item:last-child {
+            margin-bottom: 0;
+        }
+        .news-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .news-date {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Floating Support Button */
+        .support-btn {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #e6eefc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(43,125,235,0.2);
+            cursor: pointer;
+            z-index: 100;
+        }
+        .support-btn i {
+            color: #5c4ce4;
+            font-size: 24px;
+        }
+        /* Adding a little dot to headphones like in image */
+        .support-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 6px;
+            height: 6px;
+            background-color: #5c4ce4;
+            border-radius: 50%;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-top: 1px solid #eee;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
+            text-decoration: none;
+            font-size: 11px;
+            gap: 4px;
+        }
+        .nav-item i {
+            font-size: 20px;
+        }
+        .nav-item.active {
+            color: #2b7deb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div class="slider-container">
+    <div class="slide fade">
+            <img src="https://files.catbox.moe/ljdc20.jpg" alt="Banner 1">
+        </div>
+        
+        <div class="slide fade">
+            <img src="https://files.catbox.moe/dx2rd9.jpg" alt="Banner 2">
+        </div>
+        
+        <div class="slide fade">
+            <img src="https://files.catbox.moe/c985ky.png" alt="Banner 3">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            My IToken 
+            <span class="card-subtitle">1 Rs = 1 IToken, 1 USDT &approx; 105 IToken</span>
+        </div>
+        
+        <div class="balance-row">
+            <div class="balance-amount">
+                <span style="font-size: 24px; margin-right: 10px;">🇮🇳</span> 
+                3.56
+            </div>
+            <button class="buy-btn">
+                <i class="fa-solid fa-indian-rupee-sign" style="background: white; color: #2b7deb; border-radius: 50%; width: 18px; height: 18px; display: flex; justify-content: center; align-items: center; font-size: 10px;"></i> Buy
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-label">Today Profit</span>
+                <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Reward</span>
+                <span class="stat-value">4%</span>
+            </div>
+            <button class="action-btn">Buy History</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-label">Auto Selling</span>
+                <span class="stat-value">Sell Set</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Sell Faster</span>
+                <span class="stat-value">Link Upi</span>
+            </div>
+            <button class="action-btn">Sell History</button>
+        </div>
+    </div>
+
+    <div class="alert-bar">
+        <div class="alert-content">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>beware for scammer</span>
+        </div>
+        <i class="fa-solid fa-circle-info" style="color: #ccc;"></i>
+    </div>
+
+    <div class="news-section">
+        <div class="news-header">
+            <h3>News</h3>
+            <a href="#">More &gt;</a>
+        </div>
+        
+        <div class="news-item">
+            <div class="news-title">Problembindupi</div>
+            <div class="news-date">2026-01-30 12:35:37</div>
+        </div>
+        
+        <div class="divider" style="margin: 15px 0;"></div>
+        
+        <div class="news-item">
+            <div class="news-title">DO NOT TRUST FOR ANY CALL</div>
+            <div class="news-date">2026-03-27 14:30:45</div>
+        </div>
+    </div>
+
+    <div class="support-btn">
+        <i class="fa-solid fa-headset"></i>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-ticket"></i>
+            <span>Buy</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-shield-check" style="font-family: 'FontAwesome'; font-weight: 900;">✔</i>
+            <span>UPI</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <span>Team</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Mine</span>
+        </a>
+    </div>
+
+</div>
+
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("slide");
+        
+        // Sabhi slides ko hide karein
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        
+        slideIndex++;
+        
+        // Agar slides khatam ho jayein, toh wapas first par aa jayein
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }    
+        
+        // Current slide ko show karein
+        slides[slideIndex - 1].style.display = "block";  
+        
+        // Har 3 seconds (3000ms) mein image change hogi
+        setTimeout(showSlides, 3000); 
+    }
+</script>
+
+</body>
+</html>
