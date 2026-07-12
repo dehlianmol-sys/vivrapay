@@ -9,6 +9,8 @@ export default function Settings() {
   const [reward, setReward] = useState('4');
   const [min, setMin] = useState('300');
   const [max, setMax] = useState('50000');
+  const [newbieReq, setNewbieReq] = useState('300');
+  const [newbieReward, setNewbieReward] = useState('60');
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -16,6 +18,8 @@ export default function Settings() {
       setReward(String(appSettings.rewardPercentage));
       setMin(String(appSettings.minOrderSize));
       setMax(String(appSettings.maxOrderSize));
+      setNewbieReq(String(appSettings.newbieRequiredOrderAmount));
+      setNewbieReward(String(appSettings.newbieRewardAmount));
     }
   }, [appSettings]);
 
@@ -24,7 +28,9 @@ export default function Settings() {
     const r = Number(reward);
     const mn = Number(min);
     const mx = Number(max);
-    if (isNaN(r) || isNaN(mn) || isNaN(mx) || r < 0 || mn < 0 || mx <= 0) {
+    const nr = Number(newbieReq);
+    const nrw = Number(newbieReward);
+    if ([r, mn, mx, nr, nrw].some((v) => isNaN(v) || v < 0) || mx <= 0) {
       toast('Enter valid numeric values', 'error');
       return;
     }
@@ -34,7 +40,13 @@ export default function Settings() {
     }
     setSaving(true);
     try {
-      await updateAppSettings({ rewardPercentage: r, minOrderSize: mn, maxOrderSize: mx });
+      await updateAppSettings({
+        rewardPercentage: r,
+        minOrderSize: mn,
+        maxOrderSize: mx,
+        newbieRequiredOrderAmount: nr,
+        newbieRewardAmount: nrw,
+      });
       toast('Settings updated', 'success');
     } catch {
       toast('Failed to update settings', 'error');
@@ -56,49 +68,31 @@ export default function Settings() {
 
       <div className="bg-white rounded-xl p-6 shadow-sm max-w-lg">
         <p className="text-sm text-slate-500 mb-6">
-          Configure the dynamic reward rate and order size limits. These values apply to all
+          Configure the dynamic reward rate, order size limits, and newbie reward. These values apply to all
           Buy/Deposit screens in real time.
         </p>
 
         <div className="space-y-5">
-          <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1.5">
-              Reward Percentage (%)
-            </label>
-            <input
-              type="number"
-              step="0.1"
-              value={reward}
-              onChange={(e) => setReward(e.target.value)}
-              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-500"
-            />
-            <p className="text-xs text-slate-400 mt-1">
-              Users receive this percentage of their deposit as bonus Itoken.
-            </p>
-          </div>
+          <Field label="Reward Percentage (%)" hint="Users receive this percentage of their deposit as bonus Itoken." value={reward} onChange={setReward} step="0.1" />
+          <Field label="Minimum Order Size (₹)" value={min} onChange={setMin} />
+          <Field label="Maximum Order Size (₹)" value={max} onChange={setMax} />
 
-          <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1.5">
-              Minimum Order Size (₹)
-            </label>
-            <input
-              type="number"
-              value={min}
-              onChange={(e) => setMin(e.target.value)}
-              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1.5">
-              Maximum Order Size (₹)
-            </label>
-            <input
-              type="number"
-              value={max}
-              onChange={(e) => setMax(e.target.value)}
-              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-500"
-            />
+          <div className="pt-4 border-t border-slate-100">
+            <h3 className="text-sm font-semibold text-slate-700 mb-3">Newbie Reward</h3>
+            <div className="space-y-5">
+              <Field
+                label="Newbie Required Order Amount (₹)"
+                hint="Amount a new user must deposit (once) to unlock the newbie reward."
+                value={newbieReq}
+                onChange={setNewbieReq}
+              />
+              <Field
+                label="Newbie Reward Amount (₹)"
+                hint="Bonus credited to a new user's wallet when they complete their first qualifying deposit."
+                value={newbieReward}
+                onChange={setNewbieReward}
+              />
+            </div>
           </div>
         </div>
 
@@ -113,6 +107,34 @@ export default function Settings() {
           {saving ? 'Saving...' : 'Save Settings'}
         </button>
       </div>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  value,
+  onChange,
+  hint,
+  step,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  hint?: string;
+  step?: string;
+}) {
+  return (
+    <div>
+      <label className="text-sm font-medium text-slate-700 block mb-1.5">{label}</label>
+      <input
+        type="number"
+        step={step}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm outline-none focus:border-blue-500"
+      />
+      {hint && <p className="text-xs text-slate-400 mt-1">{hint}</p>}
     </div>
   );
 }

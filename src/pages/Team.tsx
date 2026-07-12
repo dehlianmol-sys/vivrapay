@@ -7,10 +7,11 @@ export default function Team() {
   const { currentUser } = useStore();
   const toast = useToast();
   const [showLink, setShowLink] = useState(true);
-  const inviteLink = `https://vivrapay.app/#/rs/${(currentUser?.id ?? 'guest').slice(-10)}`;
+  const displayLink = 'https://vivrapay-online-invite-anz***';
+  const copyLink = 'https://vivrapay-online-invite-anzykiy.netlify.app/';
 
   const copy = () => {
-    navigator.clipboard.writeText(inviteLink).then(() => toast('Link Copied!', 'success'));
+    navigator.clipboard.writeText(copyLink).then(() => toast('Link copied!', 'success'));
   };
 
   return (
@@ -61,8 +62,8 @@ export default function Team() {
         </div>
 
         <div className="flex items-center justify-between ml-8 pb-5 border-b border-gray-200">
-          <div className="text-gray-400 text-sm truncate max-w-[220px]">
-            {showLink ? inviteLink : '••••••••••••••••'}
+          <div className="text-gray-400 text-sm truncate max-w-[240px]">
+            {showLink ? displayLink : '••••••••••••••••'}
           </div>
           <div className="flex gap-3 items-center">
             <QrCode size={20} className="text-[#eb7a44] cursor-pointer" />
