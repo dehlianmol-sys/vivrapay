@@ -83,13 +83,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Vivrapay — secure UPI payments and rewards platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Vivrapay" },
+      { name: "twitter:description", content: "Vivrapay — secure UPI payments and rewards platform." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/oUwB9PSWkpMgUJ22OcTjaIfEG6J2/social-images/social-1783848074422-9701.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/oUwB9PSWkpMgUJ22OcTjaIfEG6J2/social-images/social-1783848074422-9701.webp" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
