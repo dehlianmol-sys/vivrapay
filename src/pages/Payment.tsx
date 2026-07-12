@@ -237,7 +237,7 @@ export default function Payment() {
         </div>
       </div>
 
-      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white z-[100] pb-[calc(env(safe-area-inset-bottom)+14px)]">
+      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 fixed bottom-[90px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white z-[100] pb-[calc(env(safe-area-inset-bottom)+14px)]">
         <button
           onClick={cancel}
           disabled={canceling || submitting}
