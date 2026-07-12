@@ -138,7 +138,7 @@ export default function Payment() {
         <span className="font-mono">{fmt(remaining)}</span> Please pay in time
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-[180px] text-center">
+      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-[240px] text-center">
         <div className="text-rose-600 text-[13px] font-medium">
           Please use the selected UPI to pay
         </div>
@@ -237,7 +237,7 @@ export default function Payment() {
         </div>
       </div>
 
-      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white z-[100] pb-[calc(env(safe-area-inset-bottom)+14px)]">
+      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 fixed bottom-[90px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white z-[100] pb-[calc(env(safe-area-inset-bottom)+14px)]">
         <button
           onClick={cancel}
           disabled={canceling || submitting}
