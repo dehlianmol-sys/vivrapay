@@ -13,20 +13,20 @@ export default function UserLayout() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   return (
-    <div className="relative w-full max-w-[480px] mx-auto bg-[#fafbfc] min-h-screen shadow-sm">
-      <div className="min-h-screen pb-[180px]">
+    <div className="relative w-full max-w-[480px] mx-auto bg-[#fafbfc] min-h-[100dvh] shadow-sm">
+      <div className="pb-[calc(72px+env(safe-area-inset-bottom))]">
         <Outlet />
       </div>
       <button
         type="button"
         onClick={() => navigate('/customer-service')}
-        className="fixed bottom-[190px] right-4 w-[50px] h-[50px] bg-[#e6eefc] rounded-full flex justify-center items-center shadow-lg z-[100] sm:right-[max(1rem,calc(50%-240px+1rem))]"
+        className="fixed bottom-[calc(88px+env(safe-area-inset-bottom))] right-4 w-[50px] h-[50px] bg-[#e6eefc] rounded-full flex justify-center items-center shadow-lg z-[100] sm:right-[max(1rem,calc(50%-240px+1rem))]"
         aria-label="Customer Support"
       >
         <Headset size={24} className="text-[#5c4ce4]" />
         <span className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-[#5c4ce4] rounded-full" />
       </button>
-      <nav className="fixed bottom-[100px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white flex justify-between px-5 py-2.5 border-t border-gray-200 z-[100]">
+      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white flex justify-between px-5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] border-t border-gray-200 z-[100]">
         {navItems.map((item) => {
           const active = pathname === item.to;
           const Icon = item.icon;
@@ -44,7 +44,7 @@ export default function UserLayout() {
           );
         })}
       </nav>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-[100px] bg-[#fafbfc] z-[99]" />
     </div>
   );
 }
+
