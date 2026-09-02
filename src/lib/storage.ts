@@ -2,8 +2,15 @@ import imageCompression from 'browser-image-compression';
 import { supabase } from './supabase';
 
 const BUCKET = 'uploads';
+export const LOGO_BUCKET = 'logos';
 const MAX_WIDTH = 800;
 const MAX_SIZE_KB = 300;
+
+/** Public URL for a logo file stored at the root of the `logos` bucket. */
+export function getLogoUrl(fileName: string): string {
+  return supabase.storage.from(LOGO_BUCKET).getPublicUrl(fileName).data.publicUrl;
+}
+
 
 export async function compressImage(file: File): Promise<File> {
   if (!file.type.startsWith('image/')) return file;
