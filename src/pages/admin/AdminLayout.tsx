@@ -13,9 +13,10 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../lib/store';
+import { getLogoUrl } from '../../lib/storage';
 import { useToast } from '../../lib/toast';
 
-const APP_LOGO = 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/Upilogo%26applicationlogo/Vivrapaylogo.png';
+const APP_LOGO = getLogoUrl('Vivrapaylogo.png');
 
 export default function AdminLayout() {
   const { currentUser, isSuperAdmin, logout } = useStore();

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { User as UserIcon, Smartphone, Lock } from 'lucide-react';
 import { useStore } from '../lib/store';
+import { getLogoUrl } from '../lib/storage';
 import { useToast } from '../lib/toast';
 
 export default function Register() {
@@ -44,13 +45,13 @@ export default function Register() {
   };
 
   return (
-    <div className="flex justify-center bg-white min-h-screen">
+    <div className="flex justify-center bg-white min-h-[100dvh]">
       <div className="w-full max-w-[400px] px-6 py-10 bg-white">
-        <div className="text-center mt-24 mb-10">
+        <div className="text-center mt-[12vh] mb-[8vh]">
           <img
-            src="https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Vivrapaylogo.png"
+            src={getLogoUrl('Vivrapaylogo.png')}
             alt="Tivra Pay Logo"
-            className="w-[150px] h-auto object-contain block mx-auto"
+            className="w-[40vw] max-w-[170px] h-auto object-contain block mx-auto"
           />
         </div>
 
