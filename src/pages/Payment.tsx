@@ -47,7 +47,7 @@ export default function Payment() {
 
   if (!activeDeposit) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-white px-6 text-center">
+      <div className="flex flex-col items-center justify-center min-h-[100dvh] bg-white px-6 text-center">
         <p className="text-gray-600 mb-4">No active deposit order.</p>
         <button
           onClick={() => navigate('/deposit')}
@@ -124,7 +124,7 @@ export default function Payment() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white max-w-[480px] mx-auto">
+    <div className="flex flex-col h-[100dvh] bg-white max-w-[480px] mx-auto">
       <header className="flex items-center px-4 py-4 border-b border-gray-200">
         <button onClick={cancel} className="mr-3 text-gray-500">
           <ArrowLeft size={22} />
@@ -138,7 +138,7 @@ export default function Payment() {
         <span className="font-mono">{fmt(remaining)}</span> Please pay in time
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-[240px] text-center">
+      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-6 text-center">
         <div className="text-rose-600 text-[13px] font-medium">
           Please use the selected UPI to pay
         </div>
@@ -237,7 +237,7 @@ export default function Payment() {
         </div>
       </div>
 
-      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 fixed bottom-[90px] left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white z-[100] pb-[calc(env(safe-area-inset-bottom)+14px)]">
+      <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 shrink-0 w-full bg-white pb-[calc(env(safe-area-inset-bottom)+14px)]">
         <button
           onClick={cancel}
           disabled={canceling || submitting}
@@ -255,7 +255,6 @@ export default function Payment() {
           {submitting ? 'Submitting...' : 'Submit Proof'}
         </button>
       </div>
-      <div className="h-[70px]" />
     </div>
   );
 }

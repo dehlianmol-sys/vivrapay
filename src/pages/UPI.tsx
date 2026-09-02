@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { ChevronLeft, Link as LinkIcon, Play, Settings, FileText, X, CheckCircle2, CreditCard } from 'lucide-react';
 import { useStore } from '../lib/store';
+import { getLogoUrl } from '../lib/storage';
 import { useToast } from '../lib/toast';
 
 const PARTNERS = [
-  { id: 'paytm-biz', name: 'Paytm Business', desc: 'Paytm Business is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Paytmbusiness.png', disabled: false },
-  { id: 'phonepe-biz', name: 'Phonepe Business', desc: 'PhonePe Business is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Phonepebusiness.png', disabled: true },
-  { id: 'mobikwik', name: 'Mobikwik', desc: 'MobiKwik is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/MobiKwik.jpg', disabled: false },
-  { id: 'paytm', name: 'Paytm', desc: 'Paytm is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Paytm.png', disabled: true },
-  { id: 'phonepe', name: 'Phonepe', desc: 'PhonePe is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Phonepe.png', disabled: false },
-  { id: 'freecharge', name: 'Freecharge', desc: 'Freecharge offers digital payment and mobile recharge services in India.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Freecharge.png', disabled: false },
-  { id: 'airtel', name: 'Airtel', desc: 'Airtel is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Airtel.png', disabled: true },
-  { id: 'slice', name: 'Slice', desc: 'Slice is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Slice.png', disabled: true },
-  { id: 'induspay', name: 'IndusPay', desc: 'IndusPay is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Induspay.png', disabled: false },
-  { id: 'amazonpay', name: 'Amazon Pay', desc: 'Amazon Pay is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Amazonpay.jpg', disabled: false },
-  { id: 'bharatpe', name: 'BharatPe Business', desc: 'BharatPe Business is an Indian digital payment platform.', img: 'https://kxddhnncgrxinftkjpcw.supabase.co/storage/v1/object/public/logos/Bharatpaybusiness.png', disabled: false },
+  { id: 'paytm-biz', name: 'Paytm Business', desc: 'Paytm Business is an Indian digital payment platform.', img: getLogoUrl('Paytmbusiness.png'), disabled: false },
+  { id: 'phonepe-biz', name: 'Phonepe Business', desc: 'PhonePe Business is an Indian digital payment platform.', img: getLogoUrl('Phonepebusiness.png'), disabled: true },
+  { id: 'mobikwik', name: 'Mobikwik', desc: 'MobiKwik is an Indian digital payment platform.', img: getLogoUrl('MobiKwik.jpg'), disabled: false },
+  { id: 'paytm', name: 'Paytm', desc: 'Paytm is an Indian digital payment platform.', img: getLogoUrl('Paytm.png'), disabled: true },
+  { id: 'phonepe', name: 'Phonepe', desc: 'PhonePe is an Indian digital payment platform.', img: getLogoUrl('Phonepe.png'), disabled: false },
+  { id: 'freecharge', name: 'Freecharge', desc: 'Freecharge offers digital payment and mobile recharge services in India.', img: getLogoUrl('Freecharge.png'), disabled: false },
+  { id: 'airtel', name: 'Airtel', desc: 'Airtel is an Indian digital payment platform.', img: getLogoUrl('Airtel.png'), disabled: true },
+  { id: 'slice', name: 'Slice', desc: 'Slice is an Indian digital payment platform.', img: getLogoUrl('Slice.png'), disabled: true },
+  { id: 'induspay', name: 'IndusPay', desc: 'IndusPay is an Indian digital payment platform.', img: getLogoUrl('Induspay.png'), disabled: false },
+  { id: 'amazonpay', name: 'Amazon Pay', desc: 'Amazon Pay is an Indian digital payment platform.', img: getLogoUrl('Amazonpay.jpg'), disabled: false },
+  { id: 'bharatpe', name: 'BharatPe Business', desc: 'BharatPe Business is an Indian digital payment platform.', img: getLogoUrl('Bharatpaybusiness.png'), disabled: false },
 ];
 
 type Phase = 'main' | 'kyc' | 'processing' | 'upi-input';
