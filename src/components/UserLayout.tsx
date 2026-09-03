@@ -1,44 +1,31 @@
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Headset, Home as HomeIcon, Ticket, ShieldCheck, Users, User } from 'lucide-react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const navItems = [
-  { to: '/', label: 'Home', icon: HomeIcon },
-  { to: '/deposit', label: 'Buy', icon: Ticket },
-  { to: '/upi', label: 'UPI', icon: ShieldCheck },
-  { to: '/team', label: 'Team', icon: Users },
-  { to: '/mine', label: 'Mine', icon: User },
+  { to: '/', label: 'Home', icon: 'fa-solid fa-house' },
+  { to: '/deposit', label: 'Deposit', icon: 'fa-solid fa-cart-shopping' },
+  { to: '/upi', label: 'Tool', icon: 'fa-regular fa-compass' },
+  { to: '/team', label: 'Teams', icon: 'fa-regular fa-handshake' },
+  { to: '/customer-service', label: 'Support', icon: 'fa-solid fa-headset' },
+  { to: '/mine', label: 'Mine', icon: 'fa-regular fa-user' },
 ];
 
 export default function UserLayout() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   return (
-    <div className="relative w-full max-w-[480px] mx-auto bg-[#fafbfc] min-h-[100dvh] shadow-sm">
-      <div className="pb-[calc(72px+env(safe-area-inset-bottom))]">
+    <div className="vp vp-shell">
+      <div className="vp-scroll">
         <Outlet />
       </div>
-      <button
-        type="button"
-        onClick={() => navigate('/customer-service')}
-        className="fixed bottom-[calc(88px+env(safe-area-inset-bottom))] right-4 w-[50px] h-[50px] bg-[#e6eefc] rounded-full flex justify-center items-center shadow-lg z-[100] sm:right-[max(1rem,calc(50%-240px+1rem))]"
-        aria-label="Customer Support"
-      >
-        <Headset size={24} className="text-[#5c4ce4]" />
-        <span className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-[#5c4ce4] rounded-full" />
-      </button>
-      <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white flex justify-between px-5 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] border-t border-gray-200 z-[100]">
+      <nav className="vp-nav">
         {navItems.map((item) => {
           const active = pathname === item.to;
-          const Icon = item.icon;
           return (
             <Link
               key={item.to}
               to={item.to}
-              className={`flex flex-col items-center gap-1 text-[11px] no-underline transition-colors ${
-                active ? 'text-[#2b7deb]' : 'text-gray-400'
-              }`}
+              className={`vp-nav-item${active ? ' active' : ''}`}
             >
-              <Icon size={20} />
+              <i className={item.icon} />
               <span>{item.label}</span>
             </Link>
           );
@@ -47,4 +34,3 @@ export default function UserLayout() {
     </div>
   );
 }
-
