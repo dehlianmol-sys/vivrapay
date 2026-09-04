@@ -34,155 +34,64 @@ export default function Mine() {
     return <NewbiePage onBack={() => setSubPage(null)} />;
   }
 
+  const copyId = () => {
+    navigator.clipboard.writeText(userId).then(() => toast('ID copied!', 'success'));
+  };
+
   return (
-    <div className="flex flex-col h-full bg-white">
-      <div className="flex justify-center items-center py-4 bg-white relative text-base font-medium text-gray-700">
-        Mine
+    <div>
+      <div className="vp-header" style={{ justifyContent: 'center' }}>
+        <span className="vp-header-title">Mine</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto no-scrollbar pb-4 bg-white">
-        <div className="px-5 py-4 mt-2.5 flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center overflow-hidden bg-[#f8f9fa]">
-              <svg viewBox="0 0 64 64" width="48" height="48">
-                <circle cx="32" cy="32" r="32" fill="#f0f4f8" />
-                <path d="M18 64c0-12 8-20 14-20h0c6 0 14 8 14 20" fill="#d1d5db" />
-                <circle cx="32" cy="24" r="10" fill="#ffcda8" />
-                <path d="M22 20c0-6 4-10 10-10s10 4 10 10-2 8-10 8-10-2-10-8z" fill="#2d3748" />
-                <path d="M30 44l2 12 2-12z" fill="#60a5fa" />
-              </svg>
-            </div>
-            <span className="text-sm ml-3 text-gray-400">Reward:{rewardPct}%</span>
-          </div>
-          <div className="text-sm text-gray-400 flex items-center">
-            ID:{userId}
-            <ChevronRight size={14} className="text-gray-300 ml-1" />
+      <div className="vp-profile-header">
+        <div className="vp-avatar">
+          <i className="fa-solid fa-user" />
+        </div>
+        <div className="vp-profile-id">
+          ID: {userId}
+          <i className="fa-regular fa-copy" onClick={copyId} role="button" aria-label="Copy ID" />
+          <div style={{ fontSize: 12, color: 'var(--vp-muted)', fontWeight: 400, marginTop: 4 }}>
+            Reward: {rewardPct}%
           </div>
         </div>
+      </div>
 
-        <ul className="list-none px-5 mt-2.5">
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22">
-                <circle cx="12" cy="12" r="11" fill="#fff" stroke="#e0e0e0" />
-                <path d="M1 12a11 11 0 0 1 22 0z" fill="#ff9933" />
-                <path d="M1 12a11 11 0 0 0 22 0z" fill="#138808" />
-                <rect x="0" y="8.5" width="24" height="7" fill="#fff" />
-                <circle cx="12" cy="12" r="2.5" stroke="#000080" strokeWidth="0.5" fill="none" />
-              </svg>
-            }
-            label="IToken"
-            right={<span className="text-[#eebb4d]">₹{wallet.toFixed(0)}</span>}
-            onClick={() => setModal('itoken')}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22">
-                <rect x="4" y="10" width="16" height="11" rx="1" fill="#facc15" />
-                <rect x="3" y="6" width="18" height="4" rx="1" fill="#facc15" />
-                <path d="M12 6v15" stroke="#ef4444" strokeWidth="2" />
-                <path d="M12 6 C12 2 6 2 6 6" fill="none" stroke="#ef4444" strokeWidth="2" />
-                <path d="M12 6 C12 2 18 2 18 6" fill="none" stroke="#ef4444" strokeWidth="2" />
-              </svg>
-            }
-            label="Today Profit"
-            right={<span className="text-[#eebb4d]">0</span>}
-            onClick={() => setModal('profit')}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#e0f2fe">
-                <rect x="2" y="6" width="20" height="14" rx="2" stroke="#3b82f6" strokeWidth="1.5" />
-                <path d="M6 10h6 M6 14h3 M15 13l3 0 M17 11l2 2-2 2" stroke="#3b82f6" strokeWidth="1.5" />
-              </svg>
-            }
-            label="UPI Sell History"
-            onClick={goSellHistory}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#60a5fa" strokeWidth="1.5">
-                <rect x="6" y="4" width="12" height="18" rx="2" />
-                <path d="M9 2h6v4H9z M9 10h6 M9 14h6 M9 18h4" />
-              </svg>
-            }
-            label="Buy History"
-            onClick={goBuyHistory}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#60a5fa" strokeWidth="1.5">
-                <rect x="6" y="4" width="12" height="18" rx="2" />
-                <path d="M9 2h6v4H9z M9 10h6 M9 14h6 M9 18h4" />
-              </svg>
-            }
-            label="Transfer IToken History"
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fbc02d" strokeWidth="1.5">
-                <rect x="3" y="6" width="18" height="12" rx="2" />
-                <circle cx="3" cy="12" r="2" fill="#fff" stroke="#fbc02d" />
-                <circle cx="21" cy="12" r="2" fill="#fff" stroke="#fbc02d" />
-                <path d="M9 12h6" strokeDasharray="2 2" />
-              </svg>
-            }
-            label="Event Center"
-            onClick={() => setModal('event')}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#e0f2fe">
-                <rect x="2" y="6" width="20" height="14" rx="2" stroke="#60a5fa" strokeWidth="1.5" />
-                <path d="M6 10h6 M6 14h3 M15 13l3 0 M17 11l2 2-2 2" stroke="#60a5fa" strokeWidth="1.5" />
-              </svg>
-            }
-            label="Activity Records"
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="#1e293b">
-                <path d="M7 5l12 7-12 7z" />
-              </svg>
-            }
-            label="Tutorial"
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#6366f1" strokeWidth="1.5">
-                <path d="M3 15v-3a9 9 0 0 1 18 0v3m-18 0a2 2 0 0 0 2 2h1v-6H3m18 4a2 2 0 0 1-2 2h-1v-6h3m-9-3v3" />
-              </svg>
-            }
-            label="Official Service"
-            onClick={() => navigate('/customer-service')}
-          />
-          <MenuItem
-            icon={
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#60a5fa" strokeWidth="1.5">
-                <rect x="5" y="11" width="14" height="10" rx="2" />
-                <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-              </svg>
-            }
-            label="Modify Password"
-          />
-        </ul>
+      <div className="vp-dark-summary">
+        <div className="vp-summary-item">
+          <span className="val">₹{wallet.toFixed(2)}</span>
+          <span className="label">Total Amount</span>
+        </div>
+        <div className="vp-summary-item">
+          <span className="val">₹0.00</span>
+          <span className="label">Today's Earning</span>
+        </div>
+        <div className="vp-summary-item">
+          <span className="val">₹0.00</span>
+          <span className="label">Sell Amount</span>
+        </div>
+      </div>
 
-        <div className="px-5 pt-7 pb-2.5">
-          <button
-            onClick={doLogout}
-            className="w-full py-3.5 border border-gray-200 rounded-lg bg-white text-base text-gray-600 text-center cursor-pointer hover:bg-gray-50"
-          >
-            Sign Out
-          </button>
-        </div>
-        <div className="text-center px-5 pb-8 text-[11px] text-gray-400 leading-relaxed">
-          APP Version : 1.2.0
-          <br />
-          Haven't downloaded the APK?{' '}
-          <a href="#" className="text-[#3b82f6] no-underline" onClick={(e) => e.preventDefault()}>
-            Click here and Download now
-          </a>
-        </div>
+      <div className="vp-menu-list">
+        <MenuItem icon="fa-solid fa-coins" label="IToken" right={`₹${wallet.toFixed(0)}`} onClick={() => setModal('itoken')} />
+        <MenuItem icon="fa-solid fa-chart-line" label="Today Profit" right="0" onClick={() => setModal('profit')} />
+        <MenuItem icon="fa-solid fa-calendar-check" label="Buy History" onClick={goBuyHistory} />
+        <MenuItem icon="fa-solid fa-sack-dollar" label="UPI Sell History" onClick={goSellHistory} />
+        <MenuItem icon="fa-solid fa-clipboard-list" label="Transfer IToken History" />
+        <MenuItem icon="fa-solid fa-gift" label="Event Center" onClick={() => setModal('event')} />
+        <MenuItem icon="fa-solid fa-list-check" label="Activity Records" />
+        <MenuItem icon="fa-solid fa-circle-play" label="Tutorial" />
+        <MenuItem icon="fa-solid fa-headset" label="Official Service" onClick={() => navigate('/customer-service')} />
+        <MenuItem icon="fa-solid fa-lock" label="Modify Password" />
+        <MenuItem icon="fa-solid fa-arrow-right-from-bracket" label="Logout" onClick={doLogout} />
+        <MenuItem icon="fa-solid fa-v" label="Version" right="1.2.0" />
+      </div>
+
+      <div style={{ textAlign: 'center', padding: '0 20px 20px', fontSize: 11, color: '#999' }}>
+        Haven't downloaded the APK?{' '}
+        <a href="#" style={{ color: '#2196f3' }} onClick={(e) => e.preventDefault()}>
+          Click here and Download now
+        </a>
       </div>
 
       {modal && (
@@ -258,27 +167,24 @@ function MenuItem({
   right,
   onClick,
 }: {
-  icon: React.ReactNode;
+  icon: string;
   label: string;
-  right?: React.ReactNode;
+  right?: string;
   onClick?: () => void;
 }) {
   return (
-    <li
-      onClick={onClick}
-      className={`flex justify-between items-center py-4 border-b border-gray-100 ${onClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
-    >
-      <div className="flex items-center gap-3 text-[15px] text-gray-700">
-        <span className="w-5 h-5 flex items-center justify-center">{icon}</span>
-        {label}
+    <div className="vp-menu-item" onClick={onClick} role={onClick ? 'button' : undefined}>
+      <div className="vp-menu-left">
+        <i className={icon} /> {label}
       </div>
-      <div className="flex items-center gap-2 text-gray-300 text-sm">
+      <div className="vp-menu-right">
         {right}
-        <ChevronRight size={16} className="text-gray-300" />
+        <i className="fa-solid fa-chevron-right" />
       </div>
-    </li>
+    </div>
   );
 }
+
 
 function HistoryPage({
   title,
