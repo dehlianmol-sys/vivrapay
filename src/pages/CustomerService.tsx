@@ -45,7 +45,7 @@ export default function CustomerServicePage() {
                   href={cs.linkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 px-5 py-2 bg-[#2b7deb] text-white text-sm rounded-lg font-medium hover:bg-[#1a6cd6] transition-colors flex items-center gap-1.5"
+                  className="shrink-0 px-5 py-2 bg-[#62007a] text-white text-sm rounded-lg font-medium hover:bg-[#4a005c] transition-colors flex items-center gap-1.5"
                 >
                   Go <ExternalLink size={14} />
                 </a>

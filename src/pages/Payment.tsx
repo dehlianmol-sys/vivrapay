@@ -51,7 +51,7 @@ export default function Payment() {
         <p className="text-gray-600 mb-4">No active deposit order.</p>
         <button
           onClick={() => navigate('/deposit')}
-          className="bg-[#2b7deb] text-white px-6 py-2.5 rounded-lg"
+          className="bg-[#62007a] text-white px-6 py-2.5 rounded-lg"
         >
           Browse Packages
         </button>

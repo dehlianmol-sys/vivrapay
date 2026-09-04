@@ -116,12 +116,12 @@ export default function UPI() {
           </div>
 
           <div className="flex justify-between px-4 gap-2.5 mb-5">
-            <button className="flex-1 border-none rounded-lg py-3 text-white text-sm font-medium flex flex-col items-center gap-1.5 bg-[#5b9ed5]">
+            <button className="flex-1 border-none rounded-lg py-3 text-white text-sm font-medium flex flex-col items-center gap-1.5 bg-[#8e24aa]">
               <Play size={16} /> UPI Tutorial
             </button>
             <button
               onClick={openSheet}
-              className="flex-1 border-none rounded-lg py-3 text-white text-sm font-medium flex flex-col items-center gap-1.5 bg-[#188bf4]"
+              className="flex-1 border-none rounded-lg py-3 text-white text-sm font-medium flex flex-col items-center gap-1.5 bg-[#62007a]"
             >
               <LinkIcon size={16} /> Link New UPI
             </button>
@@ -133,12 +133,12 @@ export default function UPI() {
                 key={t}
                 onClick={() => setTab(t)}
                 className={`flex-1 text-center py-3 text-[15px] cursor-pointer relative ${
-                  tab === t ? 'text-[#188bf4] font-medium' : 'text-gray-400'
+                  tab === t ? 'text-[#62007a] font-medium' : 'text-gray-400'
                 }`}
               >
                 {t}
                 {tab === t && (
-                  <span className="absolute -bottom-px left-1/2 -translate-x-1/2 w-10 h-0.5 bg-[#188bf4]" />
+                  <span className="absolute -bottom-px left-1/2 -translate-x-1/2 w-10 h-0.5 bg-[#62007a]" />
                 )}
               </div>
             ))}
@@ -177,7 +177,7 @@ export default function UPI() {
                             {item.isSelling ? 'Selling' : 'Stopped'}
                             <span
                               className={`relative inline-flex w-11 h-6 rounded-full transition-colors duration-200 ${
-                                item.isSelling ? 'bg-[#188bf4]' : 'bg-gray-300'
+                                item.isSelling ? 'bg-[#62007a]' : 'bg-gray-300'
                               }`}
                             >
                               <span
@@ -253,7 +253,7 @@ export default function UPI() {
                       </div>
                       <button
                         className={`shrink-0 px-3.5 py-1.5 text-xs text-white rounded ${
-                          p.disabled ? 'bg-[#c5d9f1] cursor-not-allowed' : 'bg-[#188bf4]'
+                          p.disabled ? 'bg-[#d1c4e9] cursor-not-allowed' : 'bg-[#62007a]'
                         }`}
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -309,10 +309,10 @@ export default function UPI() {
                 className="flex-1 border-none outline-none text-sm text-gray-700"
               />
             </div>
-            <div className="text-[#188bf4] text-xs text-center my-5">UPI list not loading? Tap to retry.</div>
+            <div className="text-[#62007a] text-xs text-center my-5">UPI list not loading? Tap to retry.</div>
             <button
               onClick={startVerification}
-              className="w-full bg-[#188bf4] text-white border-none py-3.5 rounded-lg text-base font-medium mt-5"
+              className="w-full bg-[#62007a] text-white border-none py-3.5 rounded-lg text-base font-medium mt-5"
             >
               Link Kyc
             </button>
@@ -326,7 +326,7 @@ export default function UPI() {
           <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
             <div className="px-6 pt-6 pb-5 flex flex-col items-center text-center">
               {phase === 'processing' && (
-                <div className="w-12 h-12 border-4 border-gray-200 border-t-[#188bf4] rounded-full animate-spin mb-5" />
+                <div className="w-12 h-12 border-4 border-gray-200 border-t-[#62007a] rounded-full animate-spin mb-5" />
               )}
               {phase === 'upi-input' && (
                 <CheckCircle2 size={44} className="text-[#00d26a] mb-4" />
@@ -343,7 +343,7 @@ export default function UPI() {
                   type="text"
                   value={finalUpi}
                   onChange={(e) => setFinalUpi(e.target.value)}
-                  className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm mb-4 outline-none focus:border-[#188bf4] transition-colors"
+                  className="w-full px-3 py-3 border border-gray-300 rounded-xl text-sm mb-4 outline-none focus:border-[#62007a] transition-colors"
                 />
                 <button
                   onClick={saveUpi}
