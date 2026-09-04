@@ -23,7 +23,7 @@ export default function Home() {
   const myApprovedToday = deposits.filter(
     (d) =>
       d.userId === currentUser?.id &&
-      d.status === 'approved' &&
+      d.status === 'Success' &&
       new Date(d.createdAt).toDateString() === todayKey,
   );
   const successOrders = myApprovedToday.length;
