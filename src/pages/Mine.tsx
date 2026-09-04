@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRight, X } from 'lucide-react';
 import { useStore } from '../lib/store';
 import { useToast } from '../lib/toast';
+
+type ModalKind = 'itoken' | 'profit' | 'event';
+type SubPage = 'sell-history' | 'buy-history' | 'newbie';
 
 export default function Mine() {
   const { currentUser, logout, appSettings } = useStore();
   const toast = useToast();
   const navigate = useNavigate();
-  const [modal, setModal] = useState<null | 'itoken' | 'profit' | 'event'>(null);
-  const [subPage, setSubPage] = useState<null | 'sell-history' | 'buy-history' | 'newbie'>(null);
+  const location = useLocation();
+  const navState = (location.state ?? {}) as { modal?: ModalKind; subPage?: SubPage };
+  const [modal, setModal] = useState<null | ModalKind>(navState.modal ?? null);
+  const [subPage, setSubPage] = useState<null | SubPage>(navState.subPage ?? null);
 
   const wallet = currentUser?.wallet ?? 0;
   const userId = currentUser?.id.slice(-10) ?? '—';
@@ -89,7 +94,7 @@ export default function Mine() {
 
       <div style={{ textAlign: 'center', padding: '0 20px 20px', fontSize: 11, color: '#999' }}>
         Haven't downloaded the APK?{' '}
-        <a href="#" style={{ color: '#2196f3' }} onClick={(e) => e.preventDefault()}>
+        <a href="#" style={{ color: '#62007a' }} onClick={(e) => e.preventDefault()}>
           Click here and Download now
         </a>
       </div>
@@ -149,7 +154,7 @@ export default function Mine() {
             <div className="border-t border-gray-200 flex">
               <button
                 onClick={() => setModal(null)}
-                className="flex-1 py-4 text-center text-[#3b82f6] text-base bg-transparent border-none cursor-pointer"
+                className="flex-1 py-4 text-center text-[#7b1fa2] text-base bg-transparent border-none cursor-pointer"
               >
                 {modal === 'event' ? 'cancel' : 'Confirm'}
               </button>
@@ -216,27 +221,27 @@ function HistoryPage({
             key={t}
             onClick={() => setActiveTab(i)}
             className={`py-4 text-sm cursor-pointer relative flex-1 text-center ${
-              activeTab === i ? 'text-[#3b82f6]' : 'text-gray-400'
+              activeTab === i ? 'text-[#7b1fa2]' : 'text-gray-400'
             }`}
           >
             {t}
             {activeTab === i && (
-              <span className="absolute -bottom-px left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[#3b82f6]" />
+              <span className="absolute -bottom-px left-1/2 -translate-x-1/2 w-6 h-0.5 bg-[#7b1fa2]" />
             )}
           </div>
         ))}
       </div>
       <div className="flex-1 overflow-y-auto no-scrollbar flex flex-col items-center pt-16 px-8 text-center">
         <svg viewBox="0 0 100 80" width="120" height="100" fill="none" className="mb-6">
-          <rect x="10" y="30" width="80" height="40" fill="#dbeafe" />
-          <path d="M10 30l20 10l20-20l20 10l20-20" stroke="#3b82f6" strokeWidth="5" />
-          <path d="M10 15l20 10l20-20l20 10l20-20" stroke="#93c5fd" strokeWidth="5" />
-          <rect x="10" y="30" width="80" height="40" stroke="#3b82f6" strokeWidth="4" />
+          <rect x="10" y="30" width="80" height="40" fill="#f3e5f5" />
+          <path d="M10 30l20 10l20-20l20 10l20-20" stroke="#7b1fa2" strokeWidth="5" />
+          <path d="M10 15l20 10l20-20l20 10l20-20" stroke="#ce93d8" strokeWidth="5" />
+          <rect x="10" y="30" width="80" height="40" stroke="#7b1fa2" strokeWidth="4" />
         </svg>
         <p className="text-gray-600 text-sm leading-relaxed mb-8">{emptyText}</p>
         <button
           onClick={onAction ?? onBack}
-          className="w-full max-w-xs bg-[#1a73e8] text-white py-3 rounded-full border-none text-base font-medium cursor-pointer"
+          className="w-full max-w-xs bg-[#62007a] text-white py-3 rounded-full border-none text-base font-medium cursor-pointer"
         >
           {btnText}
         </button>
@@ -272,7 +277,7 @@ function NewbiePage({ onBack }: { onBack: () => void }) {
         Newbie Rewards
       </div>
       <div className="flex-1 overflow-y-auto no-scrollbar">
-        <div className="bg-[#2b8bfb] text-white m-4 rounded-xl p-5 flex justify-between items-center">
+        <div className="bg-[#62007a] text-white m-4 rounded-xl p-5 flex justify-between items-center">
           <div>
             <p className="text-[13px] opacity-90 mb-1.5">Total bonus</p>
             <div className="text-2xl font-semibold flex items-center gap-2">
@@ -298,14 +303,14 @@ function NewbiePage({ onBack }: { onBack: () => void }) {
                 <div className="w-6 h-6 flex items-center justify-center">
                   {t.icon === 'channel' && (
                     <svg viewBox="0 0 24 24" width="22" height="22">
-                      <circle cx="12" cy="12" r="12" fill="#3b82f6" />
+                      <circle cx="12" cy="12" r="12" fill="#7b1fa2" />
                       <path d="M6 12l4 2 8-7-6 8v3l3-3 4 3 2-11z" fill="#fff" />
                     </svg>
                   )}
                   {t.icon === 'video' && (
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#e0f2fe">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#f3e5f5">
                       <rect x="2" y="5" width="20" height="14" rx="4" />
-                      <path d="M10 9l5 3-5 3z" fill="#3b82f6" />
+                      <path d="M10 9l5 3-5 3z" fill="#7b1fa2" />
                     </svg>
                   )}
                   {t.icon === 'mobikwik' && (

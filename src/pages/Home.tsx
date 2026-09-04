@@ -50,9 +50,9 @@ export default function Home() {
 
       <div className="vp-card vp-total-card">
         <div style={{ color: 'var(--vp-muted)', fontSize: 14 }}>Total Amount</div>
-        <div className="vp-amount">
+        <div className="vp-amount font-bold">
           <i className="fa-solid fa-coins" style={{ color: '#333' }} /> {wallet.toFixed(2)}{' '}
-          <span>INR</span>
+          <span style={{ fontWeight: 700 }}>INR</span>
         </div>
         <div className="vp-sell-count">
           <span>
@@ -67,28 +67,26 @@ export default function Home() {
         </div>
         <div className="vp-action-grid">
           <button className="vp-action-btn" onClick={() => navigate('/deposit')}>
-            <div className="vp-action-icon">
-              <i className="fa-solid fa-money-bill-transfer" />
-            </div>
-            Buy
+            <img className="vp-action-img" src={getPublicUrl('Buybotton.png')} alt="Buy" />
+            <span className="vp-action-label">Buy</span>
+          </button>
+          <button
+            className="vp-action-btn"
+            onClick={() => navigate('/mine', { state: { subPage: 'sell-history' } })}
+          >
+            <img className="vp-action-img" src={getPublicUrl('Sellbotton.png')} alt="Sell" />
+            <span className="vp-action-label">Sell</span>
           </button>
           <button className="vp-action-btn" onClick={() => navigate('/upi')}>
-            <div className="vp-action-icon">
-              <i className="fa-solid fa-hand-holding-dollar" />
-            </div>
-            Sell
+            <img className="vp-action-img" src={getPublicUrl('Upibotton.png')} alt="+UPI" />
+            <span className="vp-action-label">+UPI</span>
           </button>
-          <button className="vp-action-btn" onClick={() => navigate('/upi')}>
-            <div className="vp-action-icon">
-              <i className="fa-regular fa-credit-card" />
-            </div>
-            +UPI
-          </button>
-          <button className="vp-action-btn" onClick={() => navigate('/mine')}>
-            <div className="vp-action-icon">
-              <i className="fa-solid fa-gift" />
-            </div>
-            Activity
+          <button
+            className="vp-action-btn"
+            onClick={() => navigate('/mine', { state: { modal: 'event' } })}
+          >
+            <img className="vp-action-img" src={getPublicUrl('Activitybotton.png')} alt="Activity" />
+            <span className="vp-action-label">Activity</span>
           </button>
         </div>
       </div>
@@ -123,7 +121,7 @@ export default function Home() {
       <div
         className="vp-card vp-newbie-card"
         style={{ marginTop: 5 }}
-        onClick={() => navigate('/mine')}
+        onClick={() => navigate('/mine', { state: { subPage: 'newbie' } })}
       >
         <div>
           <h3 style={{ fontSize: 16, marginBottom: 5, fontWeight: 600 }}>Newbie Rewards</h3>
