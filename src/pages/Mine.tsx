@@ -1,15 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRight, X } from 'lucide-react';
 import { useStore } from '../lib/store';
 import { useToast } from '../lib/toast';
+
+type ModalKind = 'itoken' | 'profit' | 'event';
+type SubPage = 'sell-history' | 'buy-history' | 'newbie';
 
 export default function Mine() {
   const { currentUser, logout, appSettings } = useStore();
   const toast = useToast();
   const navigate = useNavigate();
-  const [modal, setModal] = useState<null | 'itoken' | 'profit' | 'event'>(null);
-  const [subPage, setSubPage] = useState<null | 'sell-history' | 'buy-history' | 'newbie'>(null);
+  const location = useLocation();
+  const navState = (location.state ?? {}) as { modal?: ModalKind; subPage?: SubPage };
+  const [modal, setModal] = useState<null | ModalKind>(navState.modal ?? null);
+  const [subPage, setSubPage] = useState<null | SubPage>(navState.subPage ?? null);
 
   const wallet = currentUser?.wallet ?? 0;
   const userId = currentUser?.id.slice(-10) ?? '—';
