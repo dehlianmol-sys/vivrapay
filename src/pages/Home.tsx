@@ -36,6 +36,21 @@ export default function Home() {
         <span className="vp-header-title">vivrapay</span>
       </div>
 
+      {currentUser?.lockedDepositId && (
+        <div
+          className="flex items-center justify-between gap-3 bg-amber-50 border-y border-amber-200 px-4 py-2.5 text-[13px] text-amber-800"
+          role="status"
+        >
+          <span className="min-w-0 truncate">Your order is pending.</span>
+          <button
+            onClick={() => navigate('/payment')}
+            className="shrink-0 rounded-full bg-amber-500 px-3 py-1 text-[12px] font-semibold text-white"
+          >
+            View
+          </button>
+        </div>
+      )}
+
       <div className="vp-banner">
         {banners.length > 0 ? (
           <img key={slide} src={banners[slide]} alt={`Promotion banner ${slide + 1}`} />
