@@ -124,7 +124,10 @@ export default function Home() {
         onClick={() => navigate('/mine', { state: { subPage: 'newbie' } })}
       >
         <div>
-          <h3 style={{ fontSize: 16, marginBottom: 5, fontWeight: 600 }}>Newbie Rewards</h3>
+          <div className="flex items-center gap-2 mb-1.5">
+            <h3 style={{ fontSize: 16, fontWeight: 600 }}>Newbie Rewards</h3>
+            <span className="vp-badge-hot">FREE ₹{newbieReward}</span>
+          </div>
           <span style={{ color: '#f44336', fontSize: 12 }}>Get ₹{newbieReward} — Click for more &gt;</span>
         </div>
         <i className="fa-solid fa-box-open" style={{ fontSize: 40, color: '#b39ddb' }} />
