@@ -35,6 +35,9 @@ const UPI_HANDLE: Record<string, string> = {
   bharatpe: '@bharatpe',
 };
 
+/** Partners whose linked accounts belong to the "Buy" category. */
+const BUY_PARTNERS = new Set(['mobikwik', 'freecharge', 'amazonpay']);
+
 export default function UPI() {
   const { currentUser, addLinkedUPI, toggleSelling } = useStore();
   const toast = useToast();
