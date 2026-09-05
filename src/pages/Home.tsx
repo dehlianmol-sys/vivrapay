@@ -36,6 +36,21 @@ export default function Home() {
         <span className="vp-header-title">vivrapay</span>
       </div>
 
+      {currentUser?.lockedDepositId && (
+        <div
+          className="flex items-center justify-between gap-3 bg-amber-50 border-y border-amber-200 px-4 py-2.5 text-[13px] text-amber-800"
+          role="status"
+        >
+          <span className="min-w-0 truncate">Your order is pending.</span>
+          <button
+            onClick={() => navigate('/payment')}
+            className="shrink-0 rounded-full bg-amber-500 px-3 py-1 text-[12px] font-semibold text-white"
+          >
+            View
+          </button>
+        </div>
+      )}
+
       <div className="vp-banner">
         {banners.length > 0 ? (
           <img key={slide} src={banners[slide]} alt={`Promotion banner ${slide + 1}`} />
@@ -124,7 +139,10 @@ export default function Home() {
         onClick={() => navigate('/mine', { state: { subPage: 'newbie' } })}
       >
         <div>
-          <h3 style={{ fontSize: 16, marginBottom: 5, fontWeight: 600 }}>Newbie Rewards</h3>
+          <div className="flex items-center gap-2 mb-1.5">
+            <h3 style={{ fontSize: 16, fontWeight: 600 }}>Newbie Rewards</h3>
+            <span className="vp-badge-hot">FREE ₹{newbieReward}</span>
+          </div>
           <span style={{ color: '#f44336', fontSize: 12 }}>Get ₹{newbieReward} — Click for more &gt;</span>
         </div>
         <i className="fa-solid fa-box-open" style={{ fontSize: 40, color: '#b39ddb' }} />
