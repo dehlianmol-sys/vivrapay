@@ -56,8 +56,8 @@ export default function Register() {
         </div>
 
         <form onSubmit={submit}>
-          <div className="flex items-center bg-[#f8fbff] rounded-[30px] px-5 py-3.5 mb-5">
-            <UserIcon size={22} className="text-[#4da0ff] mr-4 shrink-0" strokeWidth={1.5} />
+          <div className="flex items-center bg-[#faf5fc] rounded-[30px] px-5 py-3.5 mb-5">
+            <UserIcon size={22} className="text-[#8e24aa] mr-4 shrink-0" strokeWidth={1.5} />
             <input
               type="text"
               value={name}
@@ -68,8 +68,8 @@ export default function Register() {
             />
           </div>
 
-          <div className="flex items-center bg-[#f8fbff] rounded-[30px] px-5 py-3.5 mb-5">
-            <Smartphone size={22} className="text-[#4da0ff] mr-4 shrink-0" strokeWidth={1.5} />
+          <div className="flex items-center bg-[#faf5fc] rounded-[30px] px-5 py-3.5 mb-5">
+            <Smartphone size={22} className="text-[#8e24aa] mr-4 shrink-0" strokeWidth={1.5} />
             <input
               type="tel"
               value={phone}
@@ -80,8 +80,8 @@ export default function Register() {
             />
           </div>
 
-          <div className="flex items-center bg-[#f8fbff] rounded-[30px] px-5 py-3.5 mb-5">
-            <Lock size={22} className="text-[#4da0ff] mr-4 shrink-0" strokeWidth={1.5} />
+          <div className="flex items-center bg-[#faf5fc] rounded-[30px] px-5 py-3.5 mb-5">
+            <Lock size={22} className="text-[#8e24aa] mr-4 shrink-0" strokeWidth={1.5} />
             <input
               type="password"
               value={password}
@@ -93,29 +93,29 @@ export default function Register() {
           </div>
 
           <div className="flex justify-between items-center mb-9 px-1.5">
-            <span className="text-[#4da0ff] text-[15px]">Get ₹150 signup bonus</span>
+            <span className="text-[#8e24aa] text-[15px]">Get ₹150 signup bonus</span>
           </div>
 
           <button
             type="submit"
             disabled={submitting}
-            className="bg-[#2b8cff] hover:bg-[#1e7aeb] text-white border-none rounded-[10px] py-4 w-full text-lg font-medium cursor-pointer mb-4 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+            className="bg-[#62007a] hover:bg-[#4a005c] text-white border-none rounded-[10px] py-4 w-full text-lg font-medium cursor-pointer mb-4 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {submitting && <span className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin" />}
             {submitting ? 'Registering...' : 'Register'}
           </button>
         </form>
 
-        <div className="flex justify-center items-center text-xs text-[#4da0ff] mt-2.5">
+        <div className="flex justify-center items-center text-xs text-[#8e24aa] mt-2.5">
           <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
-              className="mr-1.5 w-4 h-4 accent-[#2b8cff] cursor-pointer"
+              className="mr-1.5 w-4 h-4 accent-[#62007a] cursor-pointer"
             />
             Agree{' '}
-            <a href="#" className="text-[#4da0ff] underline ml-1" onClick={(e) => e.preventDefault()}>
+            <a href="#" className="text-[#8e24aa] underline ml-1" onClick={(e) => e.preventDefault()}>
               'User Privacy Agreement'
             </a>
           </label>
@@ -123,7 +123,7 @@ export default function Register() {
 
         <p className="text-center text-sm text-gray-500 mt-8">
           Already have an account?{' '}
-          <Link to="/login" className="text-[#2b8cff] font-medium no-underline">
+          <Link to="/login" className="text-[#62007a] font-medium no-underline">
             Login Here
           </Link>
         </p>
