@@ -90,16 +90,19 @@ export default function UPI() {
   const saveUpi = async () => {
     if (!selectedPartner || !currentUser) return;
     const masked = kycNumber.substring(0, 3) + '****' + kycNumber.substring(7);
+    // Category routing: MobiKwik / Freecharge / Amazon Pay => Buy, everything else => Sell
+    const category: Tab = BUY_PARTNERS.has(selectedPartner.id) ? 'Buy' : 'Sell';
     await addLinkedUPI({
       partnerId: selectedPartner.id,
       partnerName: selectedPartner.name,
       maskedPhone: masked,
       upiId: finalUpi,
-      tabType: tab,
-      isSelling: tab === 'Sell',
+      tabType: category,
+      isSelling: category === 'Sell',
     });
     setPhase('main');
-    toast(`UPI Linked Successfully in ${tab}!`, 'success');
+    setTab(category);
+    toast(`UPI Linked Successfully in ${category}!`, 'success');
   };
 
   const partnerOf = (id: string) => PARTNERS.find((p) => p.id === id);
