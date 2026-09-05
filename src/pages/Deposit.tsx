@@ -63,6 +63,18 @@ export default function Deposit() {
         <i className="fa-solid fa-clock-rotate-left" onClick={() => navigate('/mine')} />
       </div>
 
+      {currentUser?.lockedDepositId && (
+        <div className="flex items-center justify-between gap-3 bg-amber-50 border-b border-amber-200 px-4 py-2.5 text-[13px] text-amber-800">
+          <span className="min-w-0">Your order is pending. Complete or cancel it to buy again.</span>
+          <button
+            onClick={() => navigate('/payment')}
+            className="shrink-0 rounded-full bg-amber-500 px-3 py-1 text-[12px] font-semibold text-white"
+          >
+            Open
+          </button>
+        </div>
+      )}
+
       <div className="vp-filter-tabs">
         <div className="vp-filter-pill">
           <div className="active">INR</div>
