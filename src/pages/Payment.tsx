@@ -123,62 +123,103 @@ export default function Payment() {
     }
   };
 
+  const downloadQr = async () => {
+    const url = getPublicUrl(pm.qr);
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('fetch failed');
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = `UPI_QR_${pm.name.replace(/\s+/g, '_')}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 4000);
+      toast('QR code saved to your device', 'success');
+    } catch {
+      toast('Could not download the QR code', 'error');
+    }
+  };
+
+  const goPay = () => {
+    const uri = `upi://pay?pa=${encodeURIComponent(pm.upiId)}&pn=${encodeURIComponent(pm.name)}&am=${encodeURIComponent(
+      String(activeDeposit.amount),
+    )}&cu=INR`;
+    window.location.href = uri;
+  };
+
   return (
-    <div className="flex flex-col h-[100dvh] bg-white max-w-[480px] mx-auto">
-      <header className="flex items-center px-4 py-4 border-b border-gray-200">
-        <button onClick={cancel} className="mr-3 text-gray-500">
+    <div className="flex flex-col h-[100dvh] bg-[#f6f7fb] max-w-[480px] mx-auto">
+      <header className="flex items-center gap-3 px-4 py-4 bg-white border-b border-gray-100">
+        <button onClick={cancel} className="text-gray-500 shrink-0">
           <ArrowLeft size={22} />
         </button>
-        <span className="text-base font-medium text-gray-700">
-          Buy Itoken ({pm.name})
+        <span className="min-w-0 truncate text-base font-semibold text-gray-800">
+          Order · {pm.name}
         </span>
       </header>
 
-      <div className="bg-[#fff0f0] text-rose-600 px-4 py-2.5 text-[13px] text-center">
-        <span className="font-mono">{fmt(remaining)}</span> Please pay in time
-      </div>
-
-      <div className="flex-1 overflow-y-auto no-scrollbar px-5 pt-5 pb-6 text-center">
-        <div className="text-rose-600 text-[13px] font-medium">
-          Please use the selected UPI to pay
-        </div>
-
-        <div className="my-4 relative z-10">
-          <SmartImage
-            path={pm.qr}
-            alt="UPI QR Code"
-            className="w-[180px] h-[180px] border border-gray-200 p-1.5 mx-auto rounded-lg overflow-hidden"
-            imgClassName="w-[180px] h-[180px] object-contain"
-          />
-          <a
-            href={getPublicUrl(pm.qr)}
-            download="UPI_QR_Code.jpg"
-            className="inline-flex items-center gap-1 mt-2 px-3.5 py-1.5 text-xs text-[#4a8df4] border border-[#4a8df4] rounded-md no-underline"
-          >
-            <Download size={12} /> Download QR Code
-          </a>
-        </div>
-
-        <div className="bg-[#f9f9f9] p-3 rounded-lg text-left mt-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-[13px] text-gray-500">UPI Name</span>
-            <span className="text-[13px] font-medium text-gray-700 uppercase">{pm.name}</span>
+      <div className="flex-1 overflow-y-auto no-scrollbar px-4 pt-4 pb-6">
+        <div className="rounded-2xl bg-gradient-to-br from-[#62007a] to-[#9c27b0] px-5 py-6 text-center text-white shadow-lg">
+          <div className="text-[13px] opacity-80">Amount to pay</div>
+          <div className="mt-1 text-[34px] font-extrabold leading-none">
+            ₹{Number(activeDeposit.amount).toFixed(2)}
           </div>
-          <div className="flex justify-between items-center mb-2 gap-2">
-            <span className="text-[13px] text-gray-500 shrink-0">UPI ID</span>
-            <span className="text-[13px] font-medium text-gray-700 break-all text-right flex-1">
-              {pm.upiId}
-            </span>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-[12px]">
+            Expires in <span className="font-mono font-semibold">{fmt(remaining)}</span>
+          </div>
+        </div>
+
+        <button
+          onClick={goPay}
+          className="mt-4 w-full rounded-2xl bg-[#00a862] py-4 text-base font-bold text-white shadow-md active:scale-[.99] transition-transform"
+        >
+          Pay Now with UPI App
+        </button>
+
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm">
+          <div className="flex flex-col items-center">
+            <SmartImage
+              path={pm.qr}
+              alt="UPI QR Code"
+              className="w-[190px] h-[190px] border border-gray-100 p-1.5 rounded-xl overflow-hidden"
+              imgClassName="w-[190px] h-[190px] object-contain"
+            />
             <button
-              onClick={copyUpi}
-              className="px-2 py-1 text-[11px] text-white bg-[#4a8df4] border-none rounded cursor-pointer shrink-0"
+              onClick={downloadQr}
+              className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-[#62007a] px-3.5 py-1.5 text-xs font-medium text-[#62007a]"
             >
-              <Copy size={11} className="inline" /> Copy
+              <Download size={13} /> Download QR
             </button>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-[13px] text-gray-500">Amount</span>
-            <span className="text-[13px] font-bold text-rose-600">₹ {activeDeposit.amount}</span>
+
+          <div className="mt-4 divide-y divide-gray-100 text-left">
+            <div className="flex items-center justify-between gap-3 py-2.5">
+              <span className="text-[13px] text-gray-500">Payee Name</span>
+              <span className="text-[13px] font-semibold text-gray-800 uppercase">{pm.name}</span>
+            </div>
+            <div className="flex items-center justify-between gap-2 py-2.5">
+              <span className="shrink-0 text-[13px] text-gray-500">Payout UPI</span>
+              <span className="min-w-0 flex-1 break-all text-right text-[13px] font-semibold text-gray-800">
+                {pm.upiId}
+              </span>
+              <button
+                onClick={copyUpi}
+                className="shrink-0 rounded-md border border-gray-200 px-2 py-1 text-[11px] text-gray-600"
+              >
+                <Copy size={11} className="inline" /> Copy
+              </button>
+            </div>
+            <div className="flex items-center justify-between gap-3 py-2.5">
+              <span className="text-[13px] text-gray-500">Status</span>
+              <span className="text-[13px] font-semibold text-amber-600">{activeDeposit.status}</span>
+            </div>
+            <div className="flex items-center justify-between gap-3 py-2.5">
+              <span className="shrink-0 text-[13px] text-gray-500">Order No</span>
+              <span className="min-w-0 break-all text-right text-[12px] text-gray-600">{activeDeposit.id}</span>
+            </div>
           </div>
         </div>
 
