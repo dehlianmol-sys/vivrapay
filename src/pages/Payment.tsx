@@ -223,14 +223,15 @@ export default function Payment() {
           </div>
         </div>
 
-        <div className="text-rose-600 text-[11px] text-left mt-4 leading-relaxed">
+        <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm text-left">
+        <div className="text-rose-600 text-[11px] text-left leading-relaxed">
           Notice: The remittance amount must be consistent, otherwise the transaction will not be
           completed.
           <br />
           Notice: If you have already paid, please wait patiently for review, do not cancel the order.
         </div>
 
-        <div className="mt-6 text-left">
+        <div className="mt-5 text-left">
           <label className="text-sm text-gray-700 block mb-1.5">12-digit UTR Number</label>
           <input
             type="text"
@@ -239,7 +240,7 @@ export default function Payment() {
             value={utr}
             onChange={(e) => setUtr(e.target.value.replace(/\D/g, ''))}
             placeholder="Enter 12-digit UTR"
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#4a8df4]"
+            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-[#62007a]"
           />
         </div>
 
@@ -276,6 +277,7 @@ export default function Payment() {
             </div>
           )}
         </div>
+        </div>
       </div>
 
       <div className="flex px-4 py-3.5 gap-2.5 border-t border-gray-200 shrink-0 w-full bg-white pb-[calc(env(safe-area-inset-bottom)+14px)]">
@@ -290,7 +292,7 @@ export default function Payment() {
         <button
           onClick={submit}
           disabled={submitting || canceling}
-          className="flex-1 py-3 bg-[#4a8df4] text-white rounded-md text-sm font-medium disabled:opacity-50 flex items-center justify-center gap-2"
+          className="flex-1 py-3 bg-[#62007a] text-white rounded-md text-sm font-medium disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {submitting && <span className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin" />}
           {submitting ? 'Submitting...' : 'Submit Proof'}
