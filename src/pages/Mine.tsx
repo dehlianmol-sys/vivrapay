@@ -74,8 +74,18 @@ export default function Mine() {
       </div>
 
       <div className="vp-profile-header">
-        <div className="vp-avatar">
-          <i className="fa-solid fa-user" />
+        <div className="vp-avatar" style={{ background: 'linear-gradient(135deg,#62007a,#b23fd4)' }}>
+          {avatarBroken ? (
+            <span className="w-full h-full flex items-center justify-center text-white text-2xl font-bold">
+              {userId.slice(0, 2)}
+            </span>
+          ) : (
+            <img
+              src={getPublicUrl(avatarFile)}
+              alt="Profile avatar"
+              onError={() => setAvatarBroken(true)}
+            />
+          )}
         </div>
         <div className="vp-profile-id">
           ID: {userId}
