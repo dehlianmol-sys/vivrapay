@@ -90,7 +90,7 @@ interface StoreValue {
   isAdmin: boolean;
   isSuperAdmin: boolean;
   login: (phone: string, password: string) => Promise<{ ok: boolean; message: string; user?: User }>;
-  register: (name: string, phone: string, password: string) => Promise<{ ok: boolean; message: string; user?: User }>;
+  register: (name: string, phone: string, password: string, agentId?: string | null) => Promise<{ ok: boolean; message: string; user?: User }>;
   logout: () => void;
   addLinkedUPI: (upi: Omit<LinkedUPI, 'id' | 'createdAt'>) => Promise<void>;
   toggleSelling: (upiId: string) => Promise<void>;
@@ -312,7 +312,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return { ok: true, message: 'Login successful', user: mapUser(row, []) };
   }, []);
 
-  const register: StoreValue['register'] = useCallback(async (name, phone, password) => {
+  const register: StoreValue['register'] = useCallback(async (name, phone, password, agentId) => {
     const { data: existing } = await supabase
       .from('profiles')
       .select('id')
@@ -322,7 +322,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     const { data, error } = await supabase
       .from('profiles')
-      .insert({ name, phone, password, role: 'user', wallet: 150, has_deposited_300: false })
+      .insert({ name, phone, password, role: 'user', wallet: 150, has_deposited_300: false, agent_id: agentId || null })
       .select('*')
       .single();
     if (error) return { ok: false, message: 'Registration failed. Please try again.' };

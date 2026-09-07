@@ -10,6 +10,7 @@ import {
   X,
   Settings,
   Headphones,
+  Briefcase,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../lib/store';
@@ -32,6 +33,7 @@ export default function AdminLayout() {
           { to: '/admin/gateways', label: 'Payment Gateways', icon: CreditCard },
           { to: '/admin/banners', label: 'Banners', icon: Image },
           { to: '/admin/users', label: 'User Ledger', icon: Users },
+          { to: '/admin/agents', label: 'Agent Management', icon: Briefcase },
           { to: '/admin/settings', label: 'Global Settings', icon: Settings },
           { to: '/admin/customer-service', label: 'Customer Service', icon: Headphones },
         ]
