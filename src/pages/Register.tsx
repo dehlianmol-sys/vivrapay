@@ -111,6 +111,19 @@ export default function Register() {
               />
             </div>
 
+            <label className="block text-[12px] font-semibold text-gray-500 mb-1.5">Referral Code / Agent ID</label>
+            <div className="flex items-center bg-[#efe9f3] border border-transparent rounded-2xl px-4 py-3.5 mb-4">
+              <BadgeCheck size={20} className="text-[#8e24aa] mr-3 shrink-0" strokeWidth={1.6} />
+              <input
+                type="text"
+                value={refCode}
+                readOnly
+                disabled
+                placeholder="No referral code"
+                className="border-none bg-transparent outline-none w-full text-base text-gray-600"
+              />
+            </div>
+
             <div className="mb-6 rounded-2xl bg-[#f3e5f5] px-4 py-3 text-[13px] font-semibold text-[#62007a]">
               🎁 Get ₹150 signup bonus
             </div>
