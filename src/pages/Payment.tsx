@@ -94,8 +94,8 @@ export default function Payment() {
           const { error: upErr } = await supabase.storage.from('uploads').upload(path, compressed, { cacheControl: '3600' });
           if (upErr) throw new Error(upErr.message);
           receiptPath = path;
-        } catch {
-          toast('Failed to upload receipt. Please try again.', 'error');
+        } catch (error) {
+          toast(error instanceof Error ? error.message : String(error), 'error');
           return;
         }
       }

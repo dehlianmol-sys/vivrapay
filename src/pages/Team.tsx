@@ -29,9 +29,9 @@ export default function Team() {
         </div>
         <div className="vp-rebate">
           <div style={{ color: '#aaa', marginBottom: 4 }}>Rebate Rate</div>
-          <div>L1 &nbsp;&nbsp; <strong>20%</strong></div>
-          <div>L2 &nbsp;&nbsp; <strong>15%</strong></div>
-          <div>L3 &nbsp;&nbsp; <strong>10%</strong></div>
+           <div>Level 1 &nbsp;&nbsp; <strong>5%</strong></div>
+           <div>Level 2 &nbsp;&nbsp; <strong>0.3%</strong></div>
+           <div>Level 3 &nbsp;&nbsp; <strong>0.1%</strong></div>
         </div>
       </div>
 
