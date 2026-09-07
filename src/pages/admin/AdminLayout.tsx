@@ -10,6 +10,7 @@ import {
   X,
   Settings,
   Headphones,
+  Briefcase,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../lib/store';
@@ -32,6 +33,7 @@ export default function AdminLayout() {
           { to: '/admin/gateways', label: 'Payment Gateways', icon: CreditCard },
           { to: '/admin/banners', label: 'Banners', icon: Image },
           { to: '/admin/users', label: 'User Ledger', icon: Users },
+          { to: '/admin/agents', label: 'Agent Management', icon: Briefcase },
           { to: '/admin/settings', label: 'Global Settings', icon: Settings },
           { to: '/admin/customer-service', label: 'Customer Service', icon: Headphones },
         ]
@@ -53,7 +55,7 @@ export default function AdminLayout() {
       >
         <div className="px-5 py-5 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={APP_LOGO} alt="Vivrapay" className="h-8 w-auto object-contain" />
+            <img src={APP_LOGO} alt="HK Wallet" className="h-8 w-auto object-contain" />
           </div>
           <button className="lg:hidden text-slate-400" onClick={() => setOpen(false)}>
             <X size={20} />
@@ -102,7 +104,7 @@ export default function AdminLayout() {
           <button onClick={() => setOpen(true)}>
             <Menu size={22} />
           </button>
-          <img src={APP_LOGO} alt="Vivrapay" className="h-6 w-auto object-contain" />
+          <img src={APP_LOGO} alt="HK Wallet" className="h-6 w-auto object-contain" />
         </header>
         <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
           <Outlet />

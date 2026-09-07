@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User as UserIcon, Smartphone, Lock } from 'lucide-react';
+import { User as UserIcon, Smartphone, Lock, BadgeCheck } from 'lucide-react';
 import { useStore } from '../lib/store';
 import { getLogoUrl } from '../lib/storage';
+import { lookupRefCode } from '../lib/agents';
 import { useToast } from '../lib/toast';
 
 export default function Register() {
@@ -14,6 +15,17 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [agree, setAgree] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [refCode, setRefCode] = useState('');
+
+  // Auto-fill the referral code from a pre-registration or a stored invite link.
+  useEffect(() => {
+    let active = true;
+    const t = setTimeout(async () => {
+      const code = await lookupRefCode(phone);
+      if (active && code) setRefCode(code);
+    }, 300);
+    return () => { active = false; clearTimeout(t); };
+  }, [phone]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +44,8 @@ export default function Register() {
     }
     setSubmitting(true);
     try {
-      const res = await register(name.trim(), phone.trim(), password);
+      const code = refCode || (await lookupRefCode(phone.trim())) || null;
+      const res = await register(name.trim(), phone.trim(), password, code);
       if (!res.ok) {
         toast(res.message, 'error');
         return;
@@ -50,7 +63,7 @@ export default function Register() {
         <div className="px-7 pt-[7vh] pb-7 text-white">
           <img
             src={getLogoUrl('Vivrapaylogo.png')}
-            alt="Vivrapay Logo"
+            alt="HK Wallet Logo"
             className="w-[34vw] max-w-[150px] h-auto object-contain mb-6 brightness-0 invert"
           />
           <h1 className="text-[26px] font-extrabold leading-tight">Create your account</h1>
@@ -95,6 +108,19 @@ export default function Register() {
                 placeholder="Create a password"
                 className="border-none bg-transparent outline-none w-full text-base text-black"
                 required
+              />
+            </div>
+
+            <label className="block text-[12px] font-semibold text-gray-500 mb-1.5">Referral Code / Agent ID</label>
+            <div className="flex items-center bg-[#efe9f3] border border-transparent rounded-2xl px-4 py-3.5 mb-4">
+              <BadgeCheck size={20} className="text-[#8e24aa] mr-3 shrink-0" strokeWidth={1.6} />
+              <input
+                type="text"
+                value={refCode}
+                readOnly
+                disabled
+                placeholder="No referral code"
+                className="border-none bg-transparent outline-none w-full text-base text-gray-600"
               />
             </div>
 

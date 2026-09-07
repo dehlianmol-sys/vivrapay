@@ -4,8 +4,8 @@ import { useToast } from '../lib/toast';
 export default function Team() {
   const { currentUser } = useStore();
   const toast = useToast();
-  const displayLink = 'https://vivrapay-online-invite-anz***';
-  const copyLink = 'https://vivrapay-online-invite-anzykiy.netlify.app/';
+  const displayLink = 'https://hkwallet.site/?ref=hk***';
+  const copyLink = 'https://hkwallet.site/';
 
   const copy = () => {
     navigator.clipboard.writeText(copyLink).then(() => toast('Link copied!', 'success'));
