@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User as UserIcon, Smartphone, Lock } from 'lucide-react';
+import { User as UserIcon, Smartphone, Lock, BadgeCheck } from 'lucide-react';
 import { useStore } from '../lib/store';
 import { getLogoUrl } from '../lib/storage';
+import { lookupRefCode } from '../lib/agents';
 import { useToast } from '../lib/toast';
 
 export default function Register() {
@@ -14,6 +15,17 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [agree, setAgree] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [refCode, setRefCode] = useState('');
+
+  // Auto-fill the referral code from a pre-registration or a stored invite link.
+  useEffect(() => {
+    let active = true;
+    const t = setTimeout(async () => {
+      const code = await lookupRefCode(phone);
+      if (active && code) setRefCode(code);
+    }, 300);
+    return () => { active = false; clearTimeout(t); };
+  }, [phone]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +44,8 @@ export default function Register() {
     }
     setSubmitting(true);
     try {
-      const res = await register(name.trim(), phone.trim(), password);
+      const code = refCode || (await lookupRefCode(phone.trim())) || null;
+      const res = await register(name.trim(), phone.trim(), password, code);
       if (!res.ok) {
         toast(res.message, 'error');
         return;
