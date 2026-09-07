@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <div>
       <div className="vp-header" style={{ justifyContent: 'center' }}>
-        <span className="vp-header-title">vivrapay</span>
+        <span className="vp-header-title">HK Wallet</span>
       </div>
 
       {currentUser?.lockedDepositId && (

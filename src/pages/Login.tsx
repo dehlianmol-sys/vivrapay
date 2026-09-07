@@ -42,7 +42,7 @@ export default function Login() {
         <div className="px-7 pt-[9vh] pb-8 text-white">
           <img
             src={getLogoUrl('Vivrapaylogo.png')}
-            alt="Vivrapay Logo"
+            alt="HK Wallet Logo"
             className="w-[34vw] max-w-[150px] h-auto object-contain mb-6 brightness-0 invert"
           />
           <h1 className="text-[26px] font-extrabold leading-tight">Welcome back</h1>

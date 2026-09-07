@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import type { ReactNode } from 'react';
 
 const navItems = [
   { to: '/', label: 'Home', icon: 'fa-solid fa-house' },
@@ -9,12 +10,12 @@ const navItems = [
   { to: '/mine', label: 'Mine', icon: 'fa-regular fa-user' },
 ];
 
-export default function UserLayout() {
+export default function UserLayout({ children }: { children?: ReactNode }) {
   const { pathname } = useLocation();
   return (
     <div className="vp vp-shell">
       <div className="vp-scroll">
-        <Outlet />
+        {children ?? <Outlet />}
       </div>
       <nav className="vp-nav">
         {navItems.map((item) => {
