@@ -125,7 +125,7 @@ export default function Register() {
             </div>
 
             <div className="mb-6 rounded-2xl bg-[#f3e5f5] px-4 py-3 text-[13px] font-semibold text-[#62007a]">
-              🎁 Get ₹150 signup bonus
+              Get ₹150 signup bonus
             </div>
 
             <button

@@ -1,4 +1,4 @@
-# Vivrapay Reborn
+# HK Wallet
 
 ACT AS A SENIOR EXPERT FULL-STACK DEVELOPER. 
 
@@ -6,13 +6,13 @@ ACT AS A SENIOR EXPERT FULL-STACK DEVELOPER.
 
 PROJECT GOAL: 
 
-I am doing a CLEAN REBUILD of my application "Vivrapay". I am setting up a brand new Supabase database for this. I have attached the `Vivrapay.zip` file which contains the existing codebase. 
+This project contains the HK Wallet application.
 
 
 
 PHASE 1: EXTRACTION & UI PRESERVATION (STRICT RULE)
 
-1. Extract the attached `Vivrapay.zip` file.
+1. Use the existing HK Wallet codebase.
 
 2. Use this extracted code purely as the ABSOLUTE REFERENCE for the Frontend (UI/UX, Tailwind styling, Component structure, Routing). 
 
@@ -38,7 +38,7 @@ While wiring up the clean logic, ensure these two features are implemented corre
 
 - TASK 1 (Dynamic Rewards): Admin Panel must have inputs for "Newbie Required Order Amount" and "Newbie Reward Amount" connected to the `app_settings` table. The User UI (Reward/Mine/Register pages) must fetch and display these dynamic values instead of hardcoded numbers.
 
-- TASK 2 (Masked Referral Link): On the Team page, users must see a static masked link (e.g., `https://vivrapay-online-invite-anz***`). The Copy button must copy the exact static link: `https://vivrapay-online-invite-anzykiy.netlify.app/` without ANY dynamic IDs appended. Show a "Link copied!" toast.
+- TASK 2 (Masked Referral Link): The Team page displays and copies the configured HK Wallet referral link.
 
 
 

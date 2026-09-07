@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AGENT_SESSION_KEY, REFERRAL_BASE, getAgentById, getAgentStats, type Agent, type AgentStats } from '../../lib/agents';
+import { AGENT_SESSION_KEY, COMMISSION_TIERS, REFERRAL_BASE, getAgentById, getAgentStats, type Agent, type AgentStats } from '../../lib/agents';
 import { useToast } from '../../lib/toast';
 
 export default function AgentDashboard() {
@@ -18,7 +18,7 @@ export default function AgentDashboard() {
       if (!id) { navigate('/agent/login', { replace: true }); return; }
       const a = await getAgentById(id);
       if (!a) { navigate('/agent/login', { replace: true }); return; }
-      const s = await getAgentStats(a.agentId, a.commissionRate);
+      const s = await getAgentStats(a.agentId);
       if (!active) return;
       setAgent(a);
       setStats(s);
@@ -75,7 +75,7 @@ export default function AgentDashboard() {
         </div>
 
         <p className="text-[12px] text-white/50 mt-4">
-          Commission rate: {agent.commissionRate}% of all successful deposits from your users.
+          Level 1: {COMMISSION_TIERS.level1}% · Level 2: {COMMISSION_TIERS.level2}% · Level 3: {COMMISSION_TIERS.level3}%
         </p>
       </div>
     </div>

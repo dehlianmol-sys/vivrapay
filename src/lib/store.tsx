@@ -4,7 +4,7 @@ import type { AppSettings, Banner, CustomerService, Deposit, LinkedUPI, PaymentG
 import { supabase } from './supabase';
 import { uploadImage as uploadToStorage } from './storage';
 
-const SESSION_KEY = 'vivrapay_session_v1';
+const SESSION_KEY = 'hkwallet_session_v1';
 
 interface ProfileRow {
   id: string;
@@ -15,6 +15,7 @@ interface ProfileRow {
   wallet: number;
   has_deposited_300: boolean;
   locked_deposit_id: string | null;
+  agent_id: string | null;
   created_at: string;
 }
 
@@ -272,7 +273,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     })();
 
     const channel = supabase
-      .channel('vivrapay-all')
+      .channel('hkwallet-all')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, scheduleRefresh)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'upi_accounts' }, scheduleRefresh)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'payment_configurations' }, scheduleRefresh)
@@ -325,7 +326,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       .insert({ name, phone, password, role: 'user', wallet: 150, has_deposited_300: false, agent_id: agentId || null })
       .select('*')
       .single();
-    if (error) return { ok: false, message: 'Registration failed. Please try again.' };
+    if (error) return { ok: false, message: error.message };
     const row = data as ProfileRow;
     setSession(row.id);
     setSessionUserId(row.id);
@@ -415,7 +416,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       .from('transaction_records')
       .update({ utr, receipt_base64: receiptPath, status: 'Pending' })
       .eq('id', depositId);
-    if (error) return { ok: false, message: 'Submission failed. Please try again.' };
+    if (error) return { ok: false, message: error.message };
     if (currentUser?.lockedDepositId === depositId) {
       await supabase.from('profiles').update({ locked_deposit_id: null }).eq('id', currentUser.id);
     }

@@ -5,8 +5,6 @@ export interface Agent {
   agentId: string;
   name: string;
   phone: string;
-  commissionRate: number;
-  createdAt: string;
 }
 
 interface AgentRow {
@@ -14,14 +12,17 @@ interface AgentRow {
   agent_id: string;
   name: string;
   phone: string;
-  commission_rate: number;
   total_deposits: number;
-  created_at: string;
 }
 
 export const AGENT_SESSION_KEY = 'hkwallet_agent_session_v1';
 export const REF_CODE_KEY = 'hkwallet_ref_code';
 export const REFERRAL_BASE = 'https://hkwallet.site/?ref=';
+export const COMMISSION_TIERS = {
+  level1: 5,
+  level2: 0.3,
+  level3: 0.1,
+} as const;
 
 function mapAgent(r: AgentRow): Agent {
   return {
@@ -29,8 +30,6 @@ function mapAgent(r: AgentRow): Agent {
     agentId: r.agent_id,
     name: r.name,
     phone: r.phone,
-    commissionRate: Number(r.commission_rate ?? 0),
-    createdAt: r.created_at,
   };
 }
 
@@ -42,14 +41,13 @@ export async function listAgents(): Promise<Agent[]> {
   const { data } = await supabase
     .from('agents')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('agent_id', { ascending: false });
   return ((data ?? []) as AgentRow[]).map(mapAgent);
 }
 
 export async function createAgent(input: {
   name: string;
   phone: string;
-  commissionRate: number;
 }): Promise<{ ok: boolean; message: string; agent?: Agent }> {
   for (let attempt = 0; attempt < 5; attempt++) {
     const code = generateAgentCode();
@@ -59,7 +57,6 @@ export async function createAgent(input: {
         agent_id: code,
         name: input.name,
         phone: input.phone,
-        commission_rate: input.commissionRate,
       })
       .select('*')
       .single();
@@ -97,7 +94,7 @@ export interface AgentStats {
 }
 
 /** Aggregate registered users + successful deposit volume for one agent code. */
-export async function getAgentStats(agentCode: string, commissionRate: number): Promise<AgentStats> {
+export async function getAgentStats(agentCode: string): Promise<AgentStats> {
   const { data: profiles } = await supabase.from('profiles').select('id').eq('agent_id', agentCode);
   const ids = ((profiles ?? []) as { id: string }[]).map((p) => p.id);
   if (ids.length === 0) return { users: 0, deposits: 0, commission: 0 };
@@ -110,7 +107,7 @@ export async function getAgentStats(agentCode: string, commissionRate: number): 
   return {
     users: ids.length,
     deposits: +deposits.toFixed(2),
-    commission: +((deposits * commissionRate) / 100).toFixed(2),
+    commission: +((deposits * COMMISSION_TIERS.level1) / 100).toFixed(2),
   };
 }
 
@@ -118,7 +115,7 @@ export async function claimPreRegistration(phone: string, refCode: string): Prom
   const { error } = await supabase
     .from('pre_registrations')
     .upsert({ phone_number: phone, ref_code: refCode }, { onConflict: 'phone_number' });
-  if (error) return { ok: false, message: 'Could not save your number. Please try again.' };
+  if (error) return { ok: false, message: error.message };
   try { localStorage.setItem(REF_CODE_KEY, refCode); } catch { /* ignore */ }
   return { ok: true, message: 'Bonus claimed! Your download is starting.' };
 }
