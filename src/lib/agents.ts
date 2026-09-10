@@ -5,6 +5,7 @@ export interface Agent {
   agentId: string;
   name: string;
   phone: string;
+  commissionPercentage: number;
 }
 
 interface AgentRow {
@@ -12,6 +13,7 @@ interface AgentRow {
   agent_id: string;
   name: string;
   phone: string;
+  commission_percentage: number;
   total_deposits: number;
 }
 
@@ -30,6 +32,7 @@ function mapAgent(r: AgentRow): Agent {
     agentId: r.agent_id,
     name: r.name,
     phone: r.phone,
+    commissionPercentage: Number(r.commission_percentage ?? COMMISSION_TIERS.level1),
   };
 }
 
@@ -48,6 +51,7 @@ export async function listAgents(): Promise<Agent[]> {
 export async function createAgent(input: {
   name: string;
   phone: string;
+  commissionPercentage?: number;
 }): Promise<{ ok: boolean; message: string; agent?: Agent }> {
   for (let attempt = 0; attempt < 5; attempt++) {
     const code = generateAgentCode();
@@ -57,6 +61,7 @@ export async function createAgent(input: {
         agent_id: code,
         name: input.name,
         phone: input.phone,
+        commission_percentage: input.commissionPercentage ?? COMMISSION_TIERS.level1,
       })
       .select('*')
       .single();
@@ -94,7 +99,7 @@ export interface AgentStats {
 }
 
 /** Aggregate registered users + successful deposit volume for one agent code. */
-export async function getAgentStats(agentCode: string): Promise<AgentStats> {
+export async function getAgentStats(agentCode: string, commissionPercentage: number = COMMISSION_TIERS.level1): Promise<AgentStats> {
   const { data: profiles } = await supabase.from('profiles').select('id').eq('agent_id', agentCode);
   const ids = ((profiles ?? []) as { id: string }[]).map((p) => p.id);
   if (ids.length === 0) return { users: 0, deposits: 0, commission: 0 };
@@ -106,6 +111,33 @@ export async function getAgentStats(agentCode: string): Promise<AgentStats> {
   const deposits = ((txs ?? []) as { amount: number }[]).reduce((s, t) => s + Number(t.amount || 0), 0);
   return {
     users: ids.length,
+    deposits: +deposits.toFixed(2),
+    commission: +((deposits * commissionPercentage) / 100).toFixed(2),
+  };
+}
+
+export async function claimPreRegistration(phone: string, refCode: string): Promise<{ ok: boolean; message: string }> {
+  const { error } = await supabase
+    .from('pre_registrations')
+    .upsert({ phone_number: phone, ref_code: refCode }, { onConflict: 'phone_number' });
+  if (error) return { ok: false, message: error.message };
+  try { localStorage.setItem(REF_CODE_KEY, refCode); } catch { /* ignore */ }
+  return { ok: true, message: 'Bonus claimed! Your download is starting.' };
+}
+
+/** Referral code for a signup: pre-registration by phone first, then locally stored code. */
+export async function lookupRefCode(phone: string): Promise<string | null> {
+  if (phone.trim().length >= 10) {
+    const { data } = await supabase
+      .from('pre_registrations')
+      .select('ref_code')
+      .eq('phone_number', phone.trim())
+      .maybeSingle();
+    const code = (data as { ref_code: string } | null)?.ref_code;
+    if (code) return code;
+  }
+  try { return localStorage.getItem(REF_CODE_KEY); } catch { return null; }
+}
     deposits: +deposits.toFixed(2),
     commission: +((deposits * COMMISSION_TIERS.level1) / 100).toFixed(2),
   };
